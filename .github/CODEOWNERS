@@ -1,0 +1,25 @@
+# CODEOWNERS file for Obsidian Cursor
+
+# Default owners for everything in the repo
+* @test141515111
+
+# GitHub workflows and configuration
+/.github/ @test141515111
+
+# Claude configuration
+/.claude/ @test141515111
+
+# Core source code
+/src/ @test141515111
+
+# Dashboard
+/packages/dashboard-server/ @test141515111
+
+# Documentation
+/docs/ @test141515111
+*.md @test141515111
+
+# Configuration files
+package.json @test141515111
+tsconfig.json @test141515111
+miyabi.config.json @test141515111
