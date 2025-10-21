@@ -1,0 +1,38 @@
+name: ✨ Feature Request
+description: 新機能を提案する
+title: "[Feature]: "
+labels: ["✨ type:feature", "📥 state:pending", "🎯 phase:planning"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        新機能の提案ありがとうございます！
+
+  - type: textarea
+    id: problem
+    attributes:
+      label: 解決したい課題
+      description: どんな問題を解決したいですか？
+      placeholder: ～ができなくて困っています
+    validations:
+      required: true
+
+  - type: textarea
+    id: solution
+    attributes:
+      label: 提案する解決策
+      description: どのような機能があれば解決できますか？
+    validations:
+      required: true
+
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: 代替案
+      description: 他に考えられる解決策はありますか？
+
+  - type: textarea
+    id: additional
+    attributes:
+      label: 追加情報
+      description: その他の補足情報
