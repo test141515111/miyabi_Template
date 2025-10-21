@@ -1,0 +1,68 @@
+{
+  "version": "0.15.0",
+  "project": {
+    "name": "Obsidian_Cursor",
+    "owner": "test141515111",
+    "repository": "https://github.com/test141515111/Obsidian_Cursor"
+  },
+  "agents": {
+    "coordinator": {
+      "enabled": true,
+      "priority": "high",
+      "autoAssign": true
+    },
+    "codegen": {
+      "enabled": true,
+      "model": "claude-sonnet-4",
+      "maxRetries": 3
+    },
+    "review": {
+      "enabled": true,
+      "qualityThreshold": 80,
+      "securityScan": true
+    },
+    "issue": {
+      "enabled": true,
+      "autoLabel": true,
+      "labelSystem": "organization-design-65"
+    },
+    "pr": {
+      "enabled": true,
+      "conventionalCommits": true,
+      "draftByDefault": true
+    },
+    "deploy": {
+      "enabled": true,
+      "autoRollback": true,
+      "healthCheck": true
+    }
+  },
+  "automation": {
+    "waterSpider": {
+      "enabled": false,
+      "interval": 10,
+      "maxDuration": 60,
+      "scanTodos": true
+    },
+    "cicd": {
+      "autoTest": true,
+      "autoDeploy": false,
+      "requireApproval": true
+    }
+  },
+  "notifications": {
+    "slack": {
+      "enabled": false,
+      "webhookUrl": ""
+    },
+    "discord": {
+      "enabled": false,
+      "webhookUrl": ""
+    }
+  },
+  "economicCircuitBreaker": {
+    "enabled": true,
+    "monthlyBudget": 1000,
+    "alertThreshold": 0.8
+  }
+}

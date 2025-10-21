@@ -1,0 +1,41 @@
+{
+  "name": "obsidian-cursor",
+  "version": "1.0.0",
+  "description": "Obsidian Cursor project with Miyabi autonomous development framework",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "echo \"Development server not configured yet\"",
+    "build": "echo \"Build script not configured yet\"",
+    "miyabi:status": "miyabi status",
+    "miyabi:agent": "miyabi agent run",
+    "miyabi:auto": "miyabi auto",
+    "miyabi:todos": "miyabi todos",
+    "miyabi:doctor": "miyabi doctor"
+  },
+  "keywords": [
+    "obsidian",
+    "cursor",
+    "miyabi",
+    "autonomous",
+    "development",
+    "ai-agents"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "typescript": "^5.6.0"
+  },
+  "dependencies": {
+    "miyabi": "^0.15.0"
+  },
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=9.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/test141515111/Obsidian_Cursor.git"
+  }
+}
