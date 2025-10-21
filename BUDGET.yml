@@ -1,0 +1,74 @@
+# Economic Circuit Breaker Configuration
+# コスト監視とサーキットブレーカー設定
+
+# 月次予算（USD）
+monthly_budget_usd: 1000
+
+# 閾値設定
+thresholds:
+  # 警告閾値（80%で警告）
+  warning: 0.80
+
+  # 緊急停止閾値（95%で自動停止）
+  emergency: 0.95
+
+# 通知設定
+notifications:
+  # Slack通知を有効化
+  slack:
+    enabled: false
+    # webhook_url: ${SLACK_WEBHOOK_URL}  # GitHub Secretsで設定
+
+  # Discord通知を有効化
+  discord:
+    enabled: false
+    # webhook_url: ${DISCORD_WEBHOOK_URL}  # GitHub Secretsで設定
+
+  # GitHub Issue自動作成
+  github_issue:
+    enabled: true
+    labels:
+      - "🔴 priority:critical"
+      - "🔒 type:security"
+      - "⚠️ priority:P1-High"
+
+# コスト計算対象
+cost_tracking:
+  # GitHub Actions minutes
+  github_actions: true
+
+  # API使用量（例：Claude API、OpenAI API等）
+  api_usage: true
+
+  # ストレージ使用量
+  storage: true
+
+# サーキットブレーカー動作
+circuit_breaker:
+  # 警告時の動作
+  on_warning:
+    - notify_slack
+    - notify_discord
+    - create_github_issue
+
+  # 緊急時の動作
+  on_emergency:
+    - notify_all
+    - disable_workflows
+    - create_critical_issue
+
+# 監視間隔
+monitoring:
+  # スケジュール実行（cron）
+  schedule: "0 * * * *"  # 毎時0分
+
+  # 実行タイムゾーン
+  timezone: "UTC"
+
+# ログ保存設定
+logging:
+  # コスト履歴の保存
+  save_history: true
+
+  # 保存期間（日）
+  retention_days: 90

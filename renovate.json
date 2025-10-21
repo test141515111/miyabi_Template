@@ -1,0 +1,30 @@
+{
+  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+  "extends": [
+    "config:recommended"
+  ],
+  "packageRules": [
+    {
+      "matchUpdateTypes": ["minor", "patch"],
+      "matchCurrentVersion": "!/^0/",
+      "automerge": true
+    }
+  ],
+  "schedule": [
+    "before 3am on Monday"
+  ],
+  "timezone": "UTC",
+  "labels": ["📦 dependencies"],
+  "assignees": ["test141515111"],
+  "reviewers": ["test141515111"],
+  "prConcurrentLimit": 5,
+  "prHourlyLimit": 2,
+  "dependencyDashboard": true,
+  "dependencyDashboardTitle": "📊 Renovate Dashboard",
+  "commitMessagePrefix": "chore(deps):",
+  "semanticCommits": "enabled",
+  "lockFileMaintenance": {
+    "enabled": true,
+    "schedule": ["before 3am on the first day of the month"]
+  }
+}

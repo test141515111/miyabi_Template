@@ -1,0 +1,201 @@
+# GitHub Projects V2 Configuration
+# Obsidian Cursor - Miyabi Autonomous Development Framework
+
+# Project Settings
+project:
+  # プロジェクト名
+  name: "Miyabi Development Pipeline"
+
+  # プロジェクトの説明
+  description: "AI-driven autonomous development workflow with 6 specialized agents"
+
+  # Public or Private
+  visibility: public
+
+# Custom Fields
+fields:
+  # ステータスフィールド
+  - name: "Status"
+    type: "single_select"
+    options:
+      - name: "📥 Pending"
+        color: "gray"
+      - name: "🔍 Analyzing"
+        color: "purple"
+      - name: "🚧 Implementing"
+        color: "yellow"
+      - name: "👀 Reviewing"
+        color: "blue"
+      - name: "✅ Done"
+        color: "green"
+      - name: "🚫 Blocked"
+        color: "red"
+      - name: "⏸️ Paused"
+        color: "gray"
+
+  # 優先度フィールド
+  - name: "Priority"
+    type: "single_select"
+    options:
+      - name: "🔥 Critical"
+        color: "red"
+      - name: "📌 High"
+        color: "orange"
+      - name: "📍 Medium"
+        color: "yellow"
+      - name: "📎 Low"
+        color: "green"
+
+  # 担当エージェント
+  - name: "Assigned Agent"
+    type: "single_select"
+    options:
+      - name: "🤖 Coordinator"
+        color: "purple"
+      - name: "🤖 CodeGen"
+        color: "blue"
+      - name: "🤖 Review"
+        color: "green"
+      - name: "🤖 Issue"
+        color: "yellow"
+      - name: "🤖 PR"
+        color: "orange"
+      - name: "🤖 Deploy"
+        color: "red"
+
+  # 複雑度
+  - name: "Complexity"
+    type: "single_select"
+    options:
+      - name: "🟢 Low (< 4h)"
+        color: "green"
+      - name: "🟡 Medium (4-16h)"
+        color: "yellow"
+      - name: "🔴 High (> 16h)"
+        color: "red"
+
+  # フェーズ
+  - name: "Phase"
+    type: "single_select"
+    options:
+      - name: "📋 Planning"
+        color: "gray"
+      - name: "🎯 Design"
+        color: "blue"
+      - name: "💻 Development"
+        color: "green"
+      - name: "🧪 Testing"
+        color: "yellow"
+      - name: "🚀 Deployment"
+        color: "purple"
+      - name: "🔧 Maintenance"
+        color: "orange"
+
+  # 見積もり時間（数値）
+  - name: "Estimated Hours"
+    type: "number"
+
+  # 実績時間（数値）
+  - name: "Actual Hours"
+    type: "number"
+
+  # イテレーション
+  - name: "Iteration"
+    type: "iteration"
+
+# Automation Rules
+automation:
+  # Issue作成時の自動追加
+  - trigger: "issue_opened"
+    action: "add_to_project"
+    field_updates:
+      Status: "📥 Pending"
+
+  # PR作成時の自動追加
+  - trigger: "pull_request_opened"
+    action: "add_to_project"
+    field_updates:
+      Status: "👀 Reviewing"
+
+  # ラベルベースの自動更新
+  - trigger: "label_added"
+    conditions:
+      - label: "🔍 state:analyzing"
+    field_updates:
+      Status: "🔍 Analyzing"
+
+  - trigger: "label_added"
+    conditions:
+      - label: "🚧 state:implementing"
+    field_updates:
+      Status: "🚧 Implementing"
+
+  - trigger: "label_added"
+    conditions:
+      - label: "👀 state:reviewing"
+    field_updates:
+      Status: "👀 Reviewing"
+
+  - trigger: "label_added"
+    conditions:
+      - label: "✅ state:done"
+    field_updates:
+      Status: "✅ Done"
+
+  # 優先度の自動設定
+  - trigger: "label_added"
+    conditions:
+      - label: "🔥 priority:critical"
+    field_updates:
+      Priority: "🔥 Critical"
+
+  - trigger: "label_added"
+    conditions:
+      - label: "📌 priority:high"
+    field_updates:
+      Priority: "📌 High"
+
+  # エージェント割り当て
+  - trigger: "label_added"
+    conditions:
+      - label: "🤖 agent:coordinator"
+    field_updates:
+      Assigned Agent: "🤖 Coordinator"
+
+  - trigger: "label_added"
+    conditions:
+      - label: "🤖 agent:codegen"
+    field_updates:
+      Assigned Agent: "🤖 CodeGen"
+
+# Views
+views:
+  # カンバンボード
+  - name: "Kanban Board"
+    type: "board"
+    group_by: "Status"
+    sort_by: "Priority"
+
+  # 優先度別
+  - name: "By Priority"
+    type: "table"
+    group_by: "Priority"
+    sort_by: "Status"
+
+  # エージェント別
+  - name: "By Agent"
+    type: "table"
+    group_by: "Assigned Agent"
+    sort_by: "Status"
+
+  # フェーズ別
+  - name: "By Phase"
+    type: "board"
+    group_by: "Phase"
+    sort_by: "Priority"
+
+  # タイムライン
+  - name: "Timeline"
+    type: "roadmap"
+    start_date_field: "Created At"
+    target_date_field: "Iteration"
