@@ -1,0 +1,244 @@
+# Miyabi 55 Label System - Organization Design Principles
+# Based on 組織設計原則65ラベル体系
+
+# Type Labels (タイプ)
+- name: "🐛 type:bug"
+  color: "d73a4a"
+  description: "バグ報告"
+
+- name: "✨ type:feature"
+  color: "a2eeef"
+  description: "新機能"
+
+- name: "📝 type:docs"
+  color: "0075ca"
+  description: "ドキュメント"
+
+- name: "🎨 type:ui"
+  color: "e99695"
+  description: "UI/UX改善"
+
+- name: "♻️ type:refactor"
+  color: "fbca04"
+  description: "リファクタリング"
+
+- name: "⚡ type:perf"
+  color: "1d76db"
+  description: "パフォーマンス改善"
+
+- name: "🧪 type:test"
+  color: "d4c5f9"
+  description: "テスト"
+
+- name: "🔧 type:chore"
+  color: "fef2c0"
+  description: "雑務"
+
+- name: "🔒 type:security"
+  color: "ee0701"
+  description: "セキュリティ"
+
+- name: "♿ type:a11y"
+  color: "b60205"
+  description: "アクセシビリティ"
+
+# Priority Labels (優先度)
+- name: "🔥 priority:critical"
+  color: "b60205"
+  description: "緊急"
+
+- name: "📌 priority:high"
+  color: "d93f0b"
+  description: "高優先度"
+
+- name: "📍 priority:medium"
+  color: "fbca04"
+  description: "中優先度"
+
+- name: "📎 priority:low"
+  color: "0e8a16"
+  description: "低優先度"
+
+# State Labels (状態)
+- name: "📥 state:pending"
+  color: "ededed"
+  description: "保留中"
+
+- name: "🔍 state:analyzing"
+  color: "d4c5f9"
+  description: "分析中"
+
+- name: "🚧 state:implementing"
+  color: "fbca04"
+  description: "実装中"
+
+- name: "👀 state:reviewing"
+  color: "0075ca"
+  description: "レビュー中"
+
+- name: "✅ state:done"
+  color: "0e8a16"
+  description: "完了"
+
+- name: "🚫 state:blocked"
+  color: "b60205"
+  description: "ブロック中"
+
+- name: "⏸️ state:paused"
+  color: "fbca04"
+  description: "一時停止"
+
+- name: "🗑️ state:wontfix"
+  color: "ffffff"
+  description: "修正しない"
+
+# Agent Labels (エージェント)
+- name: "🤖 agent:coordinator"
+  color: "5319e7"
+  description: "Coordinator Agent"
+
+- name: "🤖 agent:codegen"
+  color: "5319e7"
+  description: "CodeGen Agent"
+
+- name: "🤖 agent:review"
+  color: "5319e7"
+  description: "Review Agent"
+
+- name: "🤖 agent:issue"
+  color: "5319e7"
+  description: "Issue Agent"
+
+- name: "🤖 agent:pr"
+  color: "5319e7"
+  description: "PR Agent"
+
+- name: "🤖 agent:deploy"
+  color: "5319e7"
+  description: "Deploy Agent"
+
+# Phase Labels (フェーズ)
+- name: "📋 phase:planning"
+  color: "d4c5f9"
+  description: "計画フェーズ"
+
+- name: "🎯 phase:design"
+  color: "a2eeef"
+  description: "設計フェーズ"
+
+- name: "💻 phase:development"
+  color: "0e8a16"
+  description: "開発フェーズ"
+
+- name: "🧪 phase:testing"
+  color: "fbca04"
+  description: "テストフェーズ"
+
+- name: "🚀 phase:deployment"
+  color: "1d76db"
+  description: "デプロイフェーズ"
+
+- name: "🔧 phase:maintenance"
+  color: "fef2c0"
+  description: "メンテナンスフェーズ"
+
+# Complexity Labels (複雑度)
+- name: "🟢 complexity:low"
+  color: "0e8a16"
+  description: "低複雑度 (< 4h)"
+
+- name: "🟡 complexity:medium"
+  color: "fbca04"
+  description: "中複雑度 (4-16h)"
+
+- name: "🔴 complexity:high"
+  color: "d93f0b"
+  description: "高複雑度 (> 16h)"
+
+# Scope Labels (スコープ)
+- name: "📦 scope:backend"
+  color: "0075ca"
+  description: "バックエンド"
+
+- name: "🎨 scope:frontend"
+  color: "e99695"
+  description: "フロントエンド"
+
+- name: "🗄️ scope:database"
+  color: "006b75"
+  description: "データベース"
+
+- name: "🔌 scope:api"
+  color: "1d76db"
+  description: "API"
+
+- name: "📱 scope:mobile"
+  color: "f9d0c4"
+  description: "モバイル"
+
+- name: "🖥️ scope:desktop"
+  color: "c5def5"
+  description: "デスクトップ"
+
+- name: "🧪 scope:testing"
+  color: "d4c5f9"
+  description: "テスト"
+
+- name: "📚 scope:docs"
+  color: "0075ca"
+  description: "ドキュメント"
+
+- name: "🔧 scope:infra"
+  color: "fef2c0"
+  description: "インフラ"
+
+# Impact Labels (影響度)
+- name: "💥 impact:breaking"
+  color: "b60205"
+  description: "破壊的変更"
+
+- name: "🔄 impact:major"
+  color: "d93f0b"
+  description: "大きな変更"
+
+- name: "➕ impact:minor"
+  color: "fbca04"
+  description: "小さな変更"
+
+- name: "🐛 impact:patch"
+  color: "0e8a16"
+  description: "パッチレベル"
+
+# Dependencies (依存関係)
+- name: "📦 dependencies"
+  color: "0366d6"
+  description: "依存関係更新"
+
+- name: "🔒 security-updates"
+  color: "ee0701"
+  description: "セキュリティ更新"
+
+# Special Labels
+- name: "🎓 good-first-issue"
+  color: "7057ff"
+  description: "初心者向け"
+
+- name: "🆘 help-wanted"
+  color: "008672"
+  description: "ヘルプ募集"
+
+- name: "❓ question"
+  color: "d876e3"
+  description: "質問"
+
+- name: "💬 discussion"
+  color: "cc317c"
+  description: "議論"
+
+- name: "🔁 duplicate"
+  color: "cfd3d7"
+  description: "重複"
+
+- name: "❌ invalid"
+  color: "e4e669"
+  description: "無効"

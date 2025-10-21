@@ -1,0 +1,53 @@
+# Test files
+tests/
+**/__tests__/
+**/*.test.ts
+**/*.spec.ts
+coverage/
+
+# Development files
+.github/
+.vscode/
+.husky/
+scripts/
+docs/
+
+# Source files (publish only compiled)
+src/
+tsconfig.json
+
+# Config files
+.editorconfig
+.prettierrc
+.prettierignore
+.eslintrc.json
+.eslintignore
+jest.config.js
+commitlint.config.js
+.huskyrc.json
+
+# Environment
+.env
+.env.*
+!.env.example
+
+# IDE
+.DS_Store
+.idea/
+*.swp
+*.swo
+
+# Git
+.git/
+.gitignore
+.gitattributes
+
+# Misc
+*.log
+.npmrc
+.nvmrc
+CLAUDE.md
+CONTRIBUTING.md
+.specstory/
+.claude/
+.claude-flow/

@@ -20,7 +20,7 @@ out/
 .env.*.local
 
 # IDE
-.vscode/
+# .vscode/ is tracked for team consistency
 .idea/
 *.swp
 *.swo

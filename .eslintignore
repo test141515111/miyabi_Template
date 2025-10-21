@@ -1,0 +1,38 @@
+# Dependencies
+node_modules/
+
+# Build output
+dist/
+build/
+out/
+.next/
+
+# Coverage
+coverage/
+.nyc_output/
+
+# Generated files
+*.d.ts
+!src/**/*.d.ts
+
+# Config files
+*.config.js
+!eslint.config.js
+
+# Test files (if you want to skip linting tests)
+# **/*.test.ts
+# **/*.spec.ts
+
+# Documentation
+docs/
+
+# IDE
+.vscode/
+.idea/
+
+# Git
+.git/
+
+# Misc
+.env
+.env.*
