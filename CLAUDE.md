@@ -194,6 +194,153 @@ ANTHROPIC_API_KEY=sk-ant-xxxxx
 - **Documentation**: README.md
 - **Issues**: GitHub Issues で管理
 
+## ドキュメントサイト構築（GitHub Pages）
+
+### 概要
+
+GitHub×Cursor知的生産システムの理念と実践を解説する、3つのHTMLドキュメントサイトを構築・公開しました。
+
+### 公開サイト
+
+すべてのサイトに統一されたグローバルナビゲーションを実装し、サイト間のシームレスな移動を実現しています。
+
+1. **知的未来** - GitHub×Cursorで実現する知的生産の未来像
+   - URL: https://test141515111.github.io/miyabi_Template/github-cursor-future-vision.html
+   - 内容: Day 1からYear 1までのタイムライン形式で知的生産の変革を解説
+   - 特徴: Discussionsセットアップガイド、段階的な実装ステップ
+
+2. **完全ガイド** - Obsidian → GitHub機能マッピング
+   - URL: https://test141515111.github.io/miyabi_Template/github-cursor-proposal.html
+   - 内容: Obsidianの各機能をGitHubでどう実現するかの技術的詳細
+   - 特徴: 具体的なワークフロー、自動化設定例
+
+3. **28記事まとめ** - 知的生産の実践的テクニック
+   - URL: https://test141515111.github.io/miyabi_Template/28-articles-summary.html
+   - 内容: note.comから収集した28記事のエッセンスを体系化
+   - 特徴: カテゴリ別整理、実践的なTips
+
+### 技術的実装
+
+#### グローバルナビゲーション
+
+すべてのHTMLファイルに共通のナビゲーションバーを実装：
+
+```css
+.global-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);  /* フロストグラス効果 */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    padding: 15px 0;
+}
+
+.global-nav-link.active {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+}
+```
+
+**特徴:**
+- 固定ヘッダー（`position: fixed`）で常時アクセス可能
+- 背景ぼかし効果（`backdrop-filter`）でモダンなUI
+- アクティブページは紫のグラデーション表示
+- レスポンシブデザイン対応
+
+#### GitHub Pagesデプロイ
+
+ワークフロー: `.github/workflows/deploy-pages.yml`
+
+```yaml
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'docs/**'
+      - '.github/workflows/deploy-pages.yml'
+  schedule:
+    - cron: '0 */6 * * *'  # 6時間ごとに自動更新
+```
+
+**デプロイフロー:**
+1. `docs/` ディレクトリの変更を検知
+2. ダッシュボードデータを自動生成
+3. GitHub Pagesにアーティファクトをアップロード
+4. 自動的に公開URL更新
+
+### トラブルシューティング記録
+
+#### 問題1: 古いコミットがデプロイされる
+
+**症状:** グローバルナビゲーションを追加したのに、サイトに反映されない
+
+**原因:**
+- ワークフローは`docs/**`の変更でのみトリガー
+- 最新コミット（ワークフロー削除）では`docs/`が変更されていない
+- そのため古いコミット（8a750e9）が引き続きデプロイされていた
+
+**解決策:**
+```bash
+# トリガー用の空ファイルを作成
+touch docs/.deploy-trigger
+git add docs/.deploy-trigger
+git commit -m "chore: Trigger GitHub Pages deployment"
+git push
+```
+
+#### 問題2: カスタムドメイン未動作
+
+**症状:** `https://vibe-codder.com/` の個別HTMLファイルが404
+
+**現状:**
+- カスタムドメインのDNS設定に問題あり
+- 標準のGitHub Pages URL（`test141515111.github.io`）は正常動作
+
+**対応:** 標準URLで運用継続（カスタムドメインは今後の課題）
+
+### GitHub Actions自動化
+
+ユーザーから共有されたスクリーンショットにあった自動化システムも実装済み：
+
+**weekly-review.yml** - 週次ナレッジレビュー
+- 毎週日曜 9:00 JST に自動実行
+- 今週のIssueを集計
+- Discussionに投稿（SlackIC通知付き）
+
+**効果:**
+- ✅ 新しいIssue作成時にテンプレートが自動展開
+- ✅ 空欄を埋めるだけで高品質なメモが完成
+- ✅ フォーマットが統一され、後から見返しやすい
+
+### デプロイ検証
+
+最終確認（2025-10-23実施）:
+
+```bash
+# 3つすべてのサイトが正常にアクセス可能
+✅ github-cursor-future-vision.html
+✅ github-cursor-proposal.html
+✅ 28-articles-summary.html
+
+# グローバルナビゲーションの動作確認
+✅ ロゴクリックでトップページ遷移
+✅ 各リンクで対応ページ遷移
+✅ アクティブ状態の正しい表示
+✅ レスポンシブレイアウト動作
+```
+
+### 今後の展開
+
+- [ ] カスタムドメインのDNS設定修正
+- [ ] ダッシュボードデータの可視化強化
+- [ ] 検索機能の追加
+- [ ] ダークモード対応
+- [ ] OGP画像の最適化
+
 ---
 
 🌸 **Miyabi** - Beauty in Autonomous Development
