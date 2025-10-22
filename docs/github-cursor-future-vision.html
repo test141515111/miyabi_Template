@@ -71,35 +71,24 @@
 
         .timeline {
             position: relative;
-            padding: 40px 0;
+            padding: 40px 0 40px 60px;
         }
 
         .timeline::before {
             content: '';
             position: absolute;
-            left: 50%;
+            left: 30px;
             top: 0;
             bottom: 0;
             width: 4px;
             background: linear-gradient(to bottom, #667eea, #764ba2);
-            transform: translateX(-50%);
         }
 
         .timeline-item {
             position: relative;
             margin-bottom: 80px;
-            width: 45%;
-        }
-
-        .timeline-item:nth-child(odd) {
-            margin-left: 0;
-            margin-right: auto;
-            padding-right: 40px;
-        }
-
-        .timeline-item:nth-child(even) {
-            margin-left: auto;
-            margin-right: 0;
+            width: 100%;
+            max-width: 900px;
             padding-left: 40px;
         }
 
@@ -112,14 +101,8 @@
             border: 6px solid white;
             box-shadow: 0 0 0 4px #667eea;
             z-index: 10;
-        }
-
-        .timeline-item:nth-child(odd) .timeline-dot {
-            right: -55px;
-        }
-
-        .timeline-item:nth-child(even) .timeline-dot {
             left: -55px;
+            top: 10px;
         }
 
         .timeline-card {
@@ -402,18 +385,22 @@
         }
 
         @media (max-width: 768px) {
+            .timeline {
+                padding: 40px 0 40px 40px;
+            }
+
             .timeline::before {
-                left: 30px;
+                left: 15px;
             }
 
             .timeline-item {
-                width: 100%;
-                padding-left: 80px !important;
-                padding-right: 0 !important;
+                padding-left: 30px;
             }
 
             .timeline-dot {
-                left: 15px !important;
+                left: -40px;
+                width: 24px;
+                height: 24px;
             }
 
             .comparison-grid {
