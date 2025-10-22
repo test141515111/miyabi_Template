@@ -1,0 +1,1228 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub×Cursor - あなたの知的未来へのロードマップ</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Hiragino Sans', 'Yu Gothic', sans-serif;
+            line-height: 1.8;
+            color: #2d3748;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 60px 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        header p {
+            font-size: 1.3em;
+            opacity: 0.95;
+        }
+
+        .content {
+            padding: 60px 40px;
+        }
+
+        .hero-section {
+            text-align: center;
+            margin-bottom: 80px;
+            padding: 40px;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            border-radius: 15px;
+            color: white;
+        }
+
+        .hero-section h2 {
+            font-size: 2.5em;
+            margin-bottom: 20px;
+        }
+
+        .hero-section p {
+            font-size: 1.4em;
+            line-height: 2;
+        }
+
+        .timeline {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 50%;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background: linear-gradient(to bottom, #667eea, #764ba2);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 80px;
+            width: 45%;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 0;
+            margin-right: auto;
+            padding-right: 40px;
+            text-align: right;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: auto;
+            margin-right: 0;
+            padding-left: 40px;
+            text-align: left;
+        }
+
+        .timeline-dot {
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-radius: 50%;
+            border: 6px solid white;
+            box-shadow: 0 0 0 4px #667eea;
+            z-index: 10;
+        }
+
+        .timeline-item:nth-child(odd) .timeline-dot {
+            right: -55px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-dot {
+            left: -55px;
+        }
+
+        .timeline-card {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-card h3 {
+            font-size: 1.8em;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .timeline-card .date {
+            display: inline-block;
+            background: #667eea;
+            color: white;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-size: 0.9em;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .step-box {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            border-left: 5px solid #667eea;
+        }
+
+        .step-box h4 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.2em;
+        }
+
+        .code-box {
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 15px 0;
+            font-family: 'Monaco', 'Courier New', monospace;
+            font-size: 0.9em;
+            overflow-x: auto;
+        }
+
+        .code-box .comment {
+            color: #6a9955;
+        }
+
+        .code-box .keyword {
+            color: #569cd6;
+        }
+
+        .benefit-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin: 40px 0;
+        }
+
+        .benefit-card {
+            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: scale(1.05);
+        }
+
+        .benefit-card .icon {
+            font-size: 3em;
+            margin-bottom: 15px;
+        }
+
+        .benefit-card h3 {
+            font-size: 1.5em;
+            margin-bottom: 15px;
+            color: #667eea;
+        }
+
+        .stats-box {
+            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+            padding: 40px;
+            border-radius: 15px;
+            margin: 40px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+            text-align: center;
+        }
+
+        .stat-item {
+            background: white;
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .stat-item .number {
+            font-size: 3em;
+            font-weight: bold;
+            color: #667eea;
+            margin-bottom: 10px;
+        }
+
+        .stat-item .label {
+            font-size: 1.1em;
+            color: #4a5568;
+        }
+
+        .comparison-section {
+            margin: 60px 0;
+            padding: 40px;
+            background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%);
+            border-radius: 15px;
+        }
+
+        .comparison-section h2 {
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 40px;
+            color: #667eea;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .before-box, .after-box {
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .before-box {
+            background: #ff6b6b;
+            color: white;
+        }
+
+        .after-box {
+            background: #51cf66;
+            color: white;
+        }
+
+        .before-box h3, .after-box h3 {
+            font-size: 1.8em;
+            margin-bottom: 20px;
+        }
+
+        .before-box ul, .after-box ul {
+            list-style: none;
+            text-align: left;
+            font-size: 1.1em;
+        }
+
+        .before-box li, .after-box li {
+            margin: 15px 0;
+            padding-left: 30px;
+            position: relative;
+        }
+
+        .before-box li::before {
+            content: '✗';
+            position: absolute;
+            left: 0;
+            font-size: 1.5em;
+        }
+
+        .after-box li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            font-size: 1.5em;
+        }
+
+        .screen-mockup {
+            background: #f7fafc;
+            border: 3px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+            font-family: monospace;
+        }
+
+        .screen-mockup .title-bar {
+            background: #667eea;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 5px 5px 0 0;
+            margin: -20px -20px 15px -20px;
+            font-weight: bold;
+        }
+
+        .action-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 15px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 1.2em;
+            font-weight: bold;
+            margin: 30px 0;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            box-shadow: 0 10px 25px rgba(102, 126, 234, 0.3);
+        }
+
+        .action-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(102, 126, 234, 0.5);
+        }
+
+        .warning-box {
+            background: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .success-box {
+            background: #d4edda;
+            border-left: 5px solid #28a745;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .info-box {
+            background: #d1ecf1;
+            border-left: 5px solid #17a2b8;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        footer {
+            background: #2d3748;
+            color: white;
+            text-align: center;
+            padding: 40px;
+            font-size: 1.1em;
+        }
+
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 30px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                padding-left: 80px !important;
+                padding-right: 0 !important;
+                text-align: left !important;
+            }
+
+            .timeline-dot {
+                left: 15px !important;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🌸 GitHub×Cursor 知的未来へのロードマップ</h1>
+            <p>今日から始める、あなたの知識が資産になる旅</p>
+        </header>
+
+        <div class="content">
+            <div class="hero-section">
+                <h2>📖 このサイトで分かること</h2>
+                <p>
+                    <strong>今日の最初の一歩</strong>から<strong>1年後の知的資産形成</strong>まで<br>
+                    具体的な操作手順とあなたを待つ未来を、ストーリー形式で紹介します
+                </p>
+            </div>
+
+            <!-- タイムライン -->
+            <div class="timeline">
+                <!-- Day 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="date">Day 1: 最初の一歩</span>
+                        <h3>🚀 たった10分で始める</h3>
+
+                        <div class="step-box">
+                            <h4>Step 1: リポジトリを作る（3分）</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">GitHub.com</div>
+                                <p><strong>1.</strong> GitHub.com にアクセス</p>
+                                <p><strong>2.</strong> 右上の「+」→「New repository」</p>
+                                <p><strong>3.</strong> リポジトリ名: <code>my-knowledge-base</code></p>
+                                <p><strong>4.</strong> ✅ Private にチェック</p>
+                                <p><strong>5.</strong> ✅ Add a README file にチェック</p>
+                                <p><strong>6.</strong> 「Create repository」をクリック</p>
+                            </div>
+                            <div class="success-box">
+                                <strong>✅ 完成！</strong> あなた専用の知識の保管庫が誕生しました
+                            </div>
+                        </div>
+
+                        <div class="step-box">
+                            <h4>Step 2: 最初のメモを書く（5分）</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">GitHub Issues</div>
+                                <p><strong>1.</strong> 「Issues」タブをクリック</p>
+                                <p><strong>2.</strong> 「New issue」をクリック</p>
+                                <p><strong>3.</strong> タイトル: <code>2025-01-23 今日の気づき</code></p>
+                                <p><strong>4.</strong> 本文に自由に書く:</p>
+                                <div class="code-box">
+<span class="comment">## 今日学んだこと</span>
+
+GitHubでメモを管理できることを知った。
+Issueがメモになるという発想が面白い。
+
+<span class="comment">## 参考</span>
+- GitHub Issues入門記事を読んだ
+- Obsidianとの違いを調べた
+                                </div>
+                                <p><strong>5.</strong> ラベルを追加: <code>fleeting</code>（一時メモ）</p>
+                                <p><strong>6.</strong> 「Submit new issue」をクリック</p>
+                            </div>
+                            <div class="success-box">
+                                <strong>🎉 おめでとう！</strong> 最初のメモが完成しました<br>
+                                これがあなたの知的資産の第一歩です
+                            </div>
+                        </div>
+
+                        <div class="step-box">
+                            <h4>Step 3: スマホから確認（2分）</h4>
+                            <div class="info-box">
+                                📱 <strong>GitHub Mobile</strong> をインストール<br>
+                                → 今書いたメモが外出先でも見られます<br>
+                                → 通勤中の気づきもその場で追記できます
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Week 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="date">Week 1: 習慣化</span>
+                        <h3>📝 毎日10分のルーティン</h3>
+
+                        <div class="step-box">
+                            <h4>朝のルーティン（5分）</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">Morning Routine</div>
+                                <p><strong>7:00</strong> - スマホでGitHub Mobileを開く</p>
+                                <p><strong>7:02</strong> - 「Discussions」→「New discussion」</p>
+                                <p><strong>タイトル:</strong> <code>2025-01-24 Daily Note</code></p>
+                                <div class="code-box">
+<span class="comment">## 今日のタスク</span>
+- [ ] プロジェクトA資料作成
+- [ ] 会議（14:00）
+- [ ] ブログ記事の下書き
+
+<span class="comment">## 今日の目標</span>
+抽象化思考の記事を書き上げる
+                                </div>
+                                <p><strong>7:05</strong> - 投稿完了。1日が始まる。</p>
+                            </div>
+                        </div>
+
+                        <div class="step-box">
+                            <h4>夜のルーティン（5分）</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">Evening Routine</div>
+                                <p><strong>22:00</strong> - 今日のDaily Noteを開く</p>
+                                <p><strong>追記:</strong></p>
+                                <div class="code-box">
+<span class="comment">## 今日の学び</span>
+抽象化思考は「具体→抽象→転用」の3ステップ。
+#102 で詳しくまとめた。
+
+会議で出たアイデア:
+- ユーザー体験の改善提案
+- これは #98 に関連しそう
+
+参考: #102 #98
+                                </div>
+                                <p><strong>22:05</strong> - 更新完了。明日への準備完了。</p>
+                            </div>
+                        </div>
+
+                        <div class="stats-box">
+                            <h3>📊 1週間後の状態</h3>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="number">7</div>
+                                    <div class="label">Daily Notes</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="number">15</div>
+                                    <div class="label">Issueメモ</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="number">30</div>
+                                    <div class="label">Issue参照</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="number">習慣化</div>
+                                    <div class="label">達成状態</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="date">Month 1: 基盤形成</span>
+                        <h3>🏗️ 知識の基盤が生まれる</h3>
+
+                        <div class="step-box">
+                            <h4>あなたのリポジトリの状態</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">my-knowledge-base Repository</div>
+                                <p><strong>📊 Statistics</strong></p>
+                                <p>✅ Daily Discussions: <strong>30個</strong></p>
+                                <p>✅ Issues (一時メモ): <strong>50個</strong></p>
+                                <p>✅ Issues (永久メモ): <strong>5個</strong></p>
+                                <p>✅ Issue参照リンク: <strong>120個</strong></p>
+                                <p>✅ コミット数: <strong>80回</strong></p>
+                            </div>
+                        </div>
+
+                        <div class="step-box">
+                            <h4>初めての「永久メモ」誕生</h4>
+                            <div class="info-box">
+                                <strong>シーン:</strong> 3週間目のある日<br><br>
+
+                                あなたは気づきます。<br>
+                                「抽象化思考」について、5つの一時メモを書いている…<br><br>
+
+                                <strong>→ これをまとめて「永久メモ」にしよう！</strong>
+                            </div>
+
+                            <div class="screen-mockup">
+                                <div class="title-bar">Issue #102: 抽象化思考の原理</div>
+                                <div class="code-box">
+<span class="comment"># 抽象化思考の原理</span>
+
+<span class="comment">## 定義</span>
+具体的な事象から本質を抽出し、他の場面に応用する思考法。
+
+<span class="comment">## 3ステップ</span>
+1. <strong>具体例の収集</strong>
+2. <strong>共通パターンの抽出</strong>
+3. <strong>別の場面への転用</strong>
+
+<span class="comment">## 参考元</span>
+- #45 デザインパターンの学び
+- #67 リファクタリングの経験
+- #89 会議での気づき
+
+<span class="comment">## 関連</span>
+- #78 プログラミング原則
+- #91 ビジネス戦略
+
+<span class="keyword">ラベル:</span> permanent, topic:思考法
+                                </div>
+                            </div>
+
+                            <div class="success-box">
+                                <strong>🎉 おめでとう！</strong><br>
+                                あなたの最初の「知的資産」が誕生しました。<br>
+                                これは <strong>時間が経っても価値を失わない</strong> 永久保存版のメモです。
+                            </div>
+                        </div>
+
+                        <div class="benefit-grid">
+                            <div class="benefit-card">
+                                <div class="icon">🧠</div>
+                                <h3>思考の整理</h3>
+                                <p>散らばっていた知識が繋がり始める</p>
+                            </div>
+                            <div class="benefit-card">
+                                <div class="icon">🔗</div>
+                                <h3>関連性の発見</h3>
+                                <p>異なる分野の知識が結びつく</p>
+                            </div>
+                            <div class="benefit-card">
+                                <div class="icon">⚡</div>
+                                <h3>アウトプット加速</h3>
+                                <p>記事や資料が30分で書ける</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 3 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="date">Month 3: 構造化</span>
+                        <h3>🗺️ 知識ネットワークの構築</h3>
+
+                        <div class="step-box">
+                            <h4>あなたのリポジトリの進化</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">Knowledge Network - 3 Months</div>
+                                <div class="code-box">
+<span class="comment">## 📊 Repository Stats</span>
+
+Daily Notes:        90個
+Fleeting Notes:    150個
+Literature Notes:   30個
+Permanent Notes:    <strong style="color: #51cf66;">20個</strong> ⬅ 知的資産！
+
+Issue References:  500個 ⬅ 知識が繋がった証拠
+MOC (目次ノート):    5個 ⬅ トピック別整理
+
+<span class="comment">## 🏷️ トピック分類</span>
+
+#topic:プログラミング   45 issues
+#topic:思考法          32 issues
+#topic:ビジネス        28 issues
+#topic:デザイン        20 issues
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-box">
+                            <h4>知識ネットワークの可視化</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">README.md - Knowledge Graph</div>
+                                <div class="code-box">
+```mermaid
+graph LR
+    A[#102 抽象化思考] --> B[#78 デザインパターン]
+    A --> C[#91 ビジネス戦略]
+
+    B --> D[#45 依存性注入]
+    C --> E[#67 マーケティング]
+
+    D --> F[#89 テスト駆動開発]
+    E --> F
+
+    G[#105 アウトプット術] --> A
+    G --> H[#112 記事執筆]
+    H --> I[#134 SEO対策]
+
+    style A fill:#8b5cf6
+    style G fill:#ec4899
+    style H fill:#10b981
+```
+                                </div>
+                                <p style="text-align: center; margin-top: 20px;">
+                                    <strong style="color: #667eea; font-size: 1.2em;">
+                                        あなたの知識は、もはや「点」ではなく「ネットワーク」
+                                    </strong>
+                                </p>
+                            </div>
+                        </div>
+
+                        <div class="step-box">
+                            <h4>Cursorとの統合: 記事執筆が10倍速に</h4>
+                            <div class="info-box">
+                                <strong>シーン:</strong> ブログ記事を書く朝<br><br>
+
+                                <strong>Before（従来）:</strong> 2時間かけて資料を探し、構成を考え、執筆<br>
+                                <strong>After（GitHub×Cursor）:</strong> 20分で完成！
+                            </div>
+
+                            <div class="screen-mockup">
+                                <div class="title-bar">Cursor - AI Chat</div>
+                                <div class="code-box">
+<span class="keyword">あなた:</span>
+#102 抽象化思考、#105 アウトプット術、#112 記事執筆
+を使って、「抽象化思考でアウトプットを加速する方法」
+という記事の構成を作って
+
+<span class="keyword">Cursor AI (GitHub Issues参照):</span>
+✅ #102から「3ステップフレームワーク」を抽出
+✅ #105から「アウトプット効率化のコツ」を取得
+✅ #112から「読者を惹きつける構成」を参照
+
+<span class="comment">📝 記事構成案を生成...</span>
+
+1. 導入: なぜアウトプットが重要か
+2. 抽象化思考の3ステップ（#102より）
+3. 実践例: ブログ記事執筆（#112より）
+4. まとめ: 継続のコツ（#105より）
+
+<span class="comment">→ 本文も一緒に生成しますか？</span>
+                                </div>
+                            </div>
+
+                            <div class="success-box">
+                                <strong>🚀 実現したこと</strong><br>
+                                ✅ 過去の知識が <strong>すぐに引き出せる</strong><br>
+                                ✅ AI が <strong>あなたの知識を理解して</strong> 提案してくれる<br>
+                                ✅ アウトプットが <strong>10倍速</strong> になる
+                            </div>
+                        </div>
+
+                        <div class="stats-box">
+                            <h3>📊 3ヶ月間の成果</h3>
+                            <div class="stats-grid">
+                                <div class="stat-item">
+                                    <div class="number">20</div>
+                                    <div class="label">永久メモ（知的資産）</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="number">500</div>
+                                    <div class="label">知識の繋がり</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="number">10倍</div>
+                                    <div class="label">アウトプット速度</div>
+                                </div>
+                                <div class="stat-item">
+                                    <div class="number">5</div>
+                                    <div class="label">トピック分類完了</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Month 6 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="date">Month 6: 自動化</span>
+                        <h3>⚙️ システムが勝手に働く</h3>
+
+                        <div class="step-box">
+                            <h4>自動テンプレートの威力</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">Issue Template - Book Note</div>
+                                <div class="code-box">
+<span class="comment">---</span>
+<span class="keyword">name:</span> 📚 書籍メモ
+<span class="keyword">about:</span> 読書メモ作成用テンプレート
+<span class="keyword">labels:</span> literature, books
+<span class="comment">---</span>
+
+## 📖 書籍情報
+- **タイトル:**
+- **著者:**
+- **読了日:** 2025-01-XX
+
+## 💡 重要な学び（Top 3）
+1.
+2.
+3.
+
+## 🔗 関連する知識
+- 参考: #
+
+## ✍️ 自分の言葉でまとめ
+
+
+## 🎯 次のアクション
+- [ ]
+                                </div>
+                            </div>
+
+                            <div class="info-box">
+                                <strong>効果:</strong><br>
+                                ✅ 「New issue」を開いた瞬間、テンプレートが自動展開<br>
+                                ✅ 空欄を埋めるだけで高品質なメモが完成<br>
+                                ✅ フォーマットが統一され、後から見返しやすい
+                            </div>
+                        </div>
+
+                        <div class="step-box">
+                            <h4>GitHub Actions: 自動通知システム</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">.github/workflows/weekly-review.yml</div>
+                                <div class="code-box">
+<span class="keyword">name:</span> Weekly Knowledge Review
+
+<span class="keyword">on:</span>
+  <span class="keyword">schedule:</span>
+    - <span class="keyword">cron:</span> '0 9 * * SUN'  <span class="comment"># 毎週日曜9時</span>
+
+<span class="keyword">jobs:</span>
+  <span class="keyword">review:</span>
+    <span class="keyword">steps:</span>
+      - <span class="keyword">name:</span> 今週のメモをまとめる
+        <span class="comment"># 自動で今週のIssueを集計</span>
+        <span class="comment"># Discussionに投稿</span>
+
+      - <span class="keyword">name:</span> Slackに通知
+        <span class="comment"># 「今週のレビュー準備完了！」</span>
+                                </div>
+                            </div>
+
+                            <div class="success-box">
+                                <strong>🤖 実現したこと</strong><br>
+                                ✅ 毎週日曜、<strong>自動で</strong> 今週の学びをまとめたレポートが届く<br>
+                                ✅ レビューすべきメモが <strong>リスト化</strong> される<br>
+                                ✅ あなたは <strong>レビューするだけ</strong>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Year 1 -->
+                <div class="timeline-item">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-card">
+                        <span class="date">Year 1: 知的資産の完成</span>
+                        <h3>💎 あなたの知的帝国</h3>
+
+                        <div class="step-box">
+                            <h4>1年間で構築された資産</h4>
+                            <div class="stats-box">
+                                <div class="stats-grid">
+                                    <div class="stat-item">
+                                        <div class="number">365</div>
+                                        <div class="label">Daily Notes</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="number">600</div>
+                                        <div class="label">一時メモ</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="number">120</div>
+                                        <div class="label">文献メモ</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="number" style="color: #f59e0b;">80</div>
+                                        <div class="label">永久メモ（資産）</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="number">2,000+</div>
+                                        <div class="label">知識の繋がり</div>
+                                    </div>
+                                    <div class="stat-item">
+                                        <div class="number">15</div>
+                                        <div class="label">トピック体系</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-box">
+                            <h4>知識ネットワークの全体像</h4>
+                            <div class="screen-mockup">
+                                <div class="title-bar">Knowledge Empire - Full Map</div>
+                                <div class="code-box">
+```mermaid
+mindmap
+  root((あなたの知識帝国))
+    プログラミング
+      設計パターン
+        SOLID原則
+        依存性注入
+      アーキテクチャ
+        マイクロサービス
+        DDD
+      テスト
+        TDD
+        BDD
+
+    思考法
+      抽象化思考
+        具体→抽象→転用
+      システム思考
+      デザイン思考
+
+    ビジネス
+      マーケティング
+        SEO戦略
+        コンテンツマーケ
+      戦略立案
+        SWOT分析
+        競合分析
+
+    執筆・発信
+      記事執筆術
+      SEOライティング
+      ストーリーテリング
+
+    自己成長
+      習慣化
+      時間管理
+      学習法
+```
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="benefit-grid">
+                            <div class="benefit-card">
+                                <div class="icon">📚</div>
+                                <h3>80個の知的資産</h3>
+                                <p>いつでも引き出せる普遍的な知識</p>
+                            </div>
+                            <div class="benefit-card">
+                                <div class="icon">🌐</div>
+                                <h3>2,000の繋がり</h3>
+                                <p>知識が有機的に結びついたネットワーク</p>
+                            </div>
+                            <div class="benefit-card">
+                                <div class="icon">⚡</div>
+                                <h3>20倍のスピード</h3>
+                                <p>アウトプットが圧倒的に加速</p>
+                            </div>
+                            <div class="benefit-card">
+                                <div class="icon">🎯</div>
+                                <h3>15の専門分野</h3>
+                                <p>体系的に整理された知識領域</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Before/After比較 -->
+            <div class="comparison-section">
+                <h2>🔄 Before → After</h2>
+                <p style="text-align: center; font-size: 1.2em; margin-bottom: 40px;">
+                    GitHub×Cursor導入前と1年後の変化
+                </p>
+
+                <div class="comparison-grid">
+                    <div class="before-box">
+                        <h3>❌ Before（導入前）</h3>
+                        <ul>
+                            <li>メモがバラバラで探せない</li>
+                            <li>昔の学びを思い出せない</li>
+                            <li>記事執筆に2-3時間かかる</li>
+                            <li>知識が積み上がらない</li>
+                            <li>同じことを何度も調べる</li>
+                            <li>アウトプットが遅い</li>
+                            <li>学びが「点」で終わる</li>
+                        </ul>
+                    </div>
+
+                    <div class="after-box">
+                        <h3>✅ After（1年後）</h3>
+                        <ul>
+                            <li>検索で3秒で見つかる</li>
+                            <li>過去の知識が資産として蓄積</li>
+                            <li>記事が20分で完成</li>
+                            <li>知識が複利で増える</li>
+                            <li>自分のメモを参照すれば済む</li>
+                            <li>アウトプットが20倍速</li>
+                            <li>学びが「ネットワーク」になる</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 具体的なベネフィット -->
+            <section style="margin: 60px 0;">
+                <h2 style="text-align: center; font-size: 2.5em; margin-bottom: 40px; color: #667eea;">
+                    💡 実現する未来
+                </h2>
+
+                <div class="benefit-grid">
+                    <div class="benefit-card" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white;">
+                        <div class="icon">🚀</div>
+                        <h3>アウトプットの爆速化</h3>
+                        <p>ブログ記事が20分で完成。資料作成も30分。過去の知識を引き出すだけ。</p>
+                    </div>
+
+                    <div class="benefit-card" style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white;">
+                        <div class="icon">💰</div>
+                        <h3>知識の資産化</h3>
+                        <p>学びが「消費」から「投資」へ。時間が経つほど価値が増す。</p>
+                    </div>
+
+                    <div class="benefit-card" style="background: linear-gradient(135deg, #43e97b 0%, #38f9d7 100%); color: white;">
+                        <div class="icon">🧠</div>
+                        <h3>思考の深化</h3>
+                        <p>知識が繋がり、洞察が生まれる。点が線になり、線が面になる。</p>
+                    </div>
+
+                    <div class="benefit-card" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); color: white;">
+                        <div class="icon">⚡</div>
+                        <h3>AI との最強タッグ</h3>
+                        <p>Cursorがあなたの知識を理解。まるで「第二の脳」のように働く。</p>
+                    </div>
+
+                    <div class="benefit-card" style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); color: white;">
+                        <div class="icon">🎯</div>
+                        <h3>体系的な成長</h3>
+                        <p>15の専門分野が形成。偏りのない、バランスの取れた知識体系。</p>
+                    </div>
+
+                    <div class="benefit-card" style="background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);">
+                        <div class="icon">🌱</div>
+                        <h3>継続的な複利効果</h3>
+                        <p>1日10分の習慣が、1年で巨大な知的資産に変わる。</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 具体的な使用シーン -->
+            <section style="margin: 60px 0;">
+                <h2 style="text-align: center; font-size: 2.5em; margin-bottom: 40px; color: #667eea;">
+                    📖 こんな時に役立つ
+                </h2>
+
+                <div class="step-box">
+                    <h4>シーン1: ブログ記事を書く</h4>
+                    <div class="info-box">
+                        <strong>状況:</strong> 「抽象化思考」について記事を書きたい<br><br>
+
+                        <strong>従来の方法:</strong><br>
+                        → ググって資料を探す（30分）<br>
+                        → 構成を考える（30分）<br>
+                        → 執筆する（60分）<br>
+                        → 合計: <strong>2時間</strong><br><br>
+
+                        <strong>GitHub×Cursor:</strong><br>
+                        → Cursorに「#102 抽象化思考を使って記事構成を作って」（3分）<br>
+                        → 生成された構成を調整（2分）<br>
+                        → AI に本文を生成させる（5分）<br>
+                        → 最終調整（10分）<br>
+                        → 合計: <strong>20分</strong> 🚀
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <h4>シーン2: プレゼン資料を作る</h4>
+                    <div class="info-box">
+                        <strong>状況:</strong> 社内勉強会で「設計パターン」の発表<br><br>
+
+                        <strong>GitHub×Cursor:</strong><br>
+                        → 検索: <code>is:issue label:permanent topic:設計パターン</code><br>
+                        → #78 デザインパターン、#45 SOLID原則、#89 依存性注入が見つかる<br>
+                        → Cursorに「これらをもとにプレゼン資料の構成を作って」<br>
+                        → 30分で資料完成 📊
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <h4>シーン3: 新しいスキルを学ぶ</h4>
+                    <div class="info-box">
+                        <strong>状況:</strong> Next.js を学習中<br><br>
+
+                        <strong>GitHub×Cursor:</strong><br>
+                        → 学んだことをIssueに記録（毎日5分）<br>
+                        → #123 ルーティング、#124 API Routes、#125 SSR/SSG...<br>
+                        → 2週間後、20個のIssueが蓄積<br>
+                        → これらを統合して永久メモ「#150 Next.js マスターガイド」を作成<br>
+                        → 自分専用の教科書が完成 📚
+                    </div>
+                </div>
+            </section>
+
+            <!-- 今すぐ始めるセクション -->
+            <section style="text-align: center; margin: 80px 0; padding: 60px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-radius: 15px; color: white;">
+                <h2 style="font-size: 3em; margin-bottom: 30px;">🚀 今すぐ始めよう</h2>
+                <p style="font-size: 1.5em; margin-bottom: 40px;">
+                    1年後のあなたは、今日始めたあなたに感謝します
+                </p>
+
+                <div style="background: white; color: #2d3748; padding: 40px; border-radius: 15px; margin: 30px 0;">
+                    <h3 style="font-size: 2em; margin-bottom: 30px; color: #667eea;">最初の10分でやること</h3>
+                    <ol style="text-align: left; font-size: 1.2em; line-height: 2.5; max-width: 600px; margin: 0 auto;">
+                        <li>GitHub.com にアクセス</li>
+                        <li>「New repository」をクリック</li>
+                        <li>リポジトリ名を入力（例: <code>my-knowledge-base</code>）</li>
+                        <li>Privateにチェック</li>
+                        <li>「Create repository」をクリック</li>
+                        <li>「Issues」タブから最初のメモを作成</li>
+                    </ol>
+
+                    <div style="margin-top: 40px; padding: 30px; background: #f7fafc; border-radius: 10px;">
+                        <p style="font-size: 1.3em; font-weight: bold; color: #667eea; margin-bottom: 15px;">
+                            ✅ これだけで、あなたの知的資産形成が始まります
+                        </p>
+                        <p style="font-size: 1.1em; color: #4a5568;">
+                            難しいことは何もありません。<br>
+                            ただ、今日の気づきを1つ書くだけ。<br>
+                            それを365日続けるだけ。
+                        </p>
+                    </div>
+                </div>
+
+                <a href="https://github.com/new" target="_blank" class="action-button" style="display: inline-block; margin-top: 30px;">
+                    🌸 今すぐリポジトリを作成する
+                </a>
+            </section>
+
+            <!-- 質問と回答 -->
+            <section style="margin: 60px 0;">
+                <h2 style="text-align: center; font-size: 2.5em; margin-bottom: 40px; color: #667eea;">
+                    💬 よくある質問
+                </h2>
+
+                <div class="step-box">
+                    <h4>Q1: 毎日続けられるか不安です</h4>
+                    <div class="success-box">
+                        <strong>A:</strong> 最初は1日5分でOK。Daily Noteに「今日の気づき」を1行書くだけでも価値があります。
+                        習慣化のコツは「完璧を目指さない」こと。書けない日があっても大丈夫。
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <h4>Q2: GitHubは開発者用では？</h4>
+                    <div class="success-box">
+                        <strong>A:</strong> GitHubは「バージョン管理」と「知識管理」のツールです。
+                        Issues = メモ、Discussions = 日記、Labels = タグ として使えば、
+                        Obsidianより強力な知識管理システムになります。
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <h4>Q3: Obsidianとどっちがいい？</h4>
+                    <div class="success-box">
+                        <strong>A:</strong>
+                        <strong>Obsidian:</strong> ローカルファイル、オフライン、プラグイン豊富<br>
+                        <strong>GitHub:</strong> クラウド、どこでもアクセス、AI統合、自動化<br><br>
+                        どちらも素晴らしいツールです。「外出先でもアクセスしたい」「AIと統合したい」ならGitHub。
+                        「完全なプライバシー」「高度なカスタマイズ」ならObsidian。
+                    </div>
+                </div>
+
+                <div class="step-box">
+                    <h4>Q4: 無料で使える？</h4>
+                    <div class="success-box">
+                        <strong>A:</strong> はい、完全無料です！GitHubのPrivateリポジトリは無料で無制限に作成できます。
+                        Cursorも無料プランがあります（月500回のAI質問まで）。
+                    </div>
+                </div>
+            </section>
+
+            <!-- 最後のメッセージ -->
+            <section style="text-align: center; margin: 80px 0; padding: 60px 40px; background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%); border-radius: 15px;">
+                <h2 style="font-size: 2.8em; margin-bottom: 30px; color: #2d3748;">
+                    🌸 あなたの知的未来は、今日から始まる
+                </h2>
+                <p style="font-size: 1.4em; line-height: 2.2; color: #4a5568; max-width: 800px; margin: 0 auto;">
+                    このページで紹介したすべては、<strong>実際に実現可能</strong>です。<br>
+                    必要なのは、<strong>今日の10分</strong>だけ。<br><br>
+
+                    1年後、あなたは振り返ります。<br>
+                    「あの日、最初のIssueを作って本当に良かった」と。<br><br>
+
+                    <strong style="font-size: 1.2em; color: #667eea;">
+                        知識は、時間と共に複利で増える唯一の資産です。
+                    </strong>
+                </p>
+
+                <div style="margin-top: 50px; padding: 40px; background: white; border-radius: 15px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);">
+                    <p style="font-size: 1.8em; font-weight: bold; color: #667eea; margin-bottom: 20px;">
+                        さあ、最初の一歩を踏み出しましょう
+                    </p>
+                    <p style="font-size: 1.2em; color: #4a5568;">
+                        今日から365日後、<br>
+                        あなたの知的帝国が完成しています。
+                    </p>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p style="font-size: 1.2em; margin-bottom: 10px;">
+                🌸 <strong>GitHub×Cursor - Beauty in Knowledge Integration</strong>
+            </p>
+            <p>
+                詳細な実装ガイド: <a href="github-cursor-proposal.html">GitHub×Cursor完全ガイド</a><br>
+                記事まとめ: <a href="28-articles-summary.html">28記事の実践的テクニック</a>
+            </p>
+        </footer>
+    </div>
+</body>
+</html>
