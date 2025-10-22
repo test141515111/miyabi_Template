@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>28記事 実践テクニック集</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --text: #1f2937;
+            --text-light: #6b7280;
+            --bg: #fafafa;
+            --white: #ffffff;
+            --border: #e5e7eb;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--bg);
+            padding-top: 70px;
+        }
+
+        /* Global Navigation */
+        .global-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .global-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .global-nav-logo {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .global-nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .global-nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .global-nav-link:hover {
+            background: #f7fafc;
+            color: #667eea;
+        }
+
+        .global-nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .category-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 3px solid var(--primary);
+        }
+
+        .category-header h2 {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .technique-card {
+            background: white;
+            border-radius: 10px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--primary);
+        }
+
+        .technique-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            color: var(--text);
+        }
+
+        .technique-list {
+            background: var(--bg);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
+
+        .technique-list ol, .technique-list ul {
+            margin-left: 1.5rem;
+        }
+
+        .technique-list li {
+            margin-bottom: 0.5rem;
+            line-height: 1.6;
+        }
+
+        .code-snippet {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+            overflow-x: auto;
+        }
+
+        .plugin-box {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem 0;
+        }
+
+        .shortcut {
+            background: var(--accent);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+    </style>
+</head>
+<body>
+    <!-- Global Navigation -->
+    <nav class="global-nav">
+        <div class="global-nav-container">
+            <a href="./" class="global-nav-logo">🌸 GitHub×Cursor</a>
+            <div class="global-nav-links">
+                <a href="github-cursor-future-vision.html" class="global-nav-link">知的未来</a>
+                <a href="github-cursor-proposal.html" class="global-nav-link">完全ガイド</a>
+                <a href="28-articles-summary.html" class="global-nav-link active">28記事まとめ</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>⚡ 28記事 実践テクニック集</h1>
+        <p>具体的な手順・コマンド・設定方法のみ</p>
+    </section>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#workflow">ワークフロー</a>
+            <a href="#plugins">プラグイン</a>
+            <a href="#visual">図解・可視化</a>
+            <a href="#cursor">Cursor統合</a>
+            <a href="#shortcuts">ショートカット</a>
+        </div>
+    </nav>
+
+    <!-- ワークフロー -->
+    <section id="workflow" class="section">
+        <div class="category-header">
+            <h2>🔄 実践ワークフロー</h2>
+        </div>
+
+        <div class="technique-card">
+            <h3>📝 Zettelkasten 3ステップ</h3>
+            <div class="technique-list">
+                <ol>
+                    <li><strong>Step 1: Fleeting Notes（一時メモ）</strong>
+                        <ul>
+                            <li>日付フォルダに作成: <code>2025-01-23.md</code></li>
+                            <li>思いついたことをとにかく書く（整理不要）</li>
+                        </ul>
+                    </li>
+                    <li><strong>Step 2: Literature Notes（文献メモ）</strong>
+                        <ul>
+                            <li>情報源を明記: <code>出典: [[書籍名]]</code></li>
+                            <li>引用と自分の解釈を分ける</li>
+                        </ul>
+                    </li>
+                    <li><strong>Step 3: Permanent Notes（永久メモ）</strong>
+                        <ul>
+                            <li>1ノート1コンセプト原則</li>
+                            <li>ファイル名: 概念そのもの（例: <code>抽象化思考.md</code>）</li>
+                            <li>最低3つの関連ノートとリンク</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <h3>🎯 事実→抽象化→転用フレームワーク</h3>
+            <div class="technique-list">
+                <strong>テンプレート:</strong>
+                <div class="code-snippet">
+## 事実
+[具体的な出来事・経験を記録]
+
+## 抽象化
+- ここから学べること:
+- 一般化できる原理:
+- 本質的なパターン:
+
+## 転用
+- 応用できる場面1:
+- 応用できる場面2:
+- 応用できる場面3:
+
+## リンク
+[[関連ノート1]] [[関連ノート2]]
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <h3>⏱️ 3ヶ月習得ロードマップ</h3>
+            <div class="technique-list">
+                <strong>1ヶ月目: 基礎</strong>
+                <ul>
+                    <li>毎日10分、Daily Noteを書く</li>
+                    <li><code>[[リンク]]</code>を5回以上使う</li>
+                    <li>Graph Viewを毎日1回見る</li>
+                </ul>
+                <strong>2ヶ月目: 構造化</strong>
+                <ul>
+                    <li>フォルダ構成を決定（例: Inbox/Permanent/Archive）</li>
+                    <li>タグ体系を3-5個に絞る</li>
+                    <li>週1回、過去のメモを見返して永久メモ化</li>
+                </ul>
+                <strong>3ヶ月目: 自動化</strong>
+                <ul>
+                    <li>Templaterでテンプレート作成</li>
+                    <li>Dataviewでクエリ作成</li>
+                    <li>自分専用のワークフロー確立</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- プラグイン -->
+    <section id="plugins" class="section" style="background: white;">
+        <div class="category-header">
+            <h2>🔌 必須プラグイン7選と使い方</h2>
+        </div>
+
+        <div class="technique-card">
+            <div class="plugin-box">
+                <strong>1. Templater</strong> - テンプレート自動化
+            </div>
+            <div class="technique-list">
+                <strong>設定手順:</strong>
+                <ol>
+                    <li>Settings → Community Plugins → Templater をインストール</li>
+                    <li>Template folder: <code>Templates/</code> に設定</li>
+                    <li>Hotkey設定: <span class="shortcut">Cmd+T</span></li>
+                </ol>
+                <strong>使用例:</strong>
+                <div class="code-snippet">
+---
+created: <% tp.date.now("YYYY-MM-DD") %>
+tags: #fleeting
+---
+
+# <% tp.file.title %>
+
+## メモ
+
+## リンク
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <div class="plugin-box">
+                <strong>2. Dataview</strong> - 動的クエリ
+            </div>
+            <div class="technique-list">
+                <strong>よく使うクエリ:</strong>
+                <div class="code-snippet">
+```dataview
+TABLE file.ctime as "作成日"
+FROM #permanent
+SORT file.ctime DESC
+LIMIT 10
+```
+
+```dataview
+LIST
+FROM [[現在のノート]]
+WHERE contains(file.outlinks, this.file.link)
+```
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <div class="plugin-box">
+                <strong>3. Excalidraw</strong> - 手書き図解
+            </div>
+            <div class="technique-list">
+                <strong>ショートカット:</strong>
+                <ul>
+                    <li><span class="shortcut">V</span> - 選択ツール</li>
+                    <li><span class="shortcut">R</span> - 矩形</li>
+                    <li><span class="shortcut">D</span> - ダイヤモンド</li>
+                    <li><span class="shortcut">A</span> - 矢印</li>
+                    <li><span class="shortcut">T</span> - テキスト</li>
+                    <li><span class="shortcut">Cmd+K</span> - Obsidianノートへリンク</li>
+                </ul>
+                <strong>効率化のコツ:</strong>
+                <ul>
+                    <li>ライブラリを作成: よく使う図形を保存</li>
+                    <li>カラーパレット: 3色に固定（メイン・アクセント・背景）</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <div class="plugin-box">
+                <strong>4. ExcaliBrain</strong> - マインドマップ自動生成
+            </div>
+            <div class="technique-list">
+                <strong>使い方:</strong>
+                <ol>
+                    <li>任意のノートを開く</li>
+                    <li>コマンドパレット: <code>ExcaliBrain: Start</code></li>
+                    <li>リンク関係が自動的に図解される</li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <div class="plugin-box">
+                <strong>5. Suggester</strong> - 爆速ノート作成
+            </div>
+            <div class="technique-list">
+                <strong>設定例:</strong>
+                <div class="code-snippet">
+// Templaterと組み合わせ
+<% await tp.user.suggester(
+  ["Daily Note", "Permanent Note", "Literature Note"],
+  ["daily", "permanent", "literature"]
+) %>
+                </div>
+                <ul>
+                    <li>ノート作成時にテンプレート選択を自動化</li>
+                    <li>タグ入力を候補から選択</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <div class="plugin-box">
+                <strong>6. Calendar</strong> - 日次メモ管理
+            </div>
+            <div class="technique-list">
+                <ul>
+                    <li>右サイドバーにカレンダー表示</li>
+                    <li>日付クリックで Daily Note 自動作成</li>
+                    <li>ドットで書き込み状況を可視化</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <div class="plugin-box">
+                <strong>7. Tag Wrangler</strong> - タグ管理
+            </div>
+            <div class="technique-list">
+                <ul>
+                    <li>タグ一括リネーム</li>
+                    <li>タグ階層の可視化</li>
+                    <li>未使用タグの削除</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 図解・可視化 -->
+    <section id="visual" class="section">
+        <div class="category-header">
+            <h2>📊 図解・可視化テクニック</h2>
+        </div>
+
+        <div class="technique-card">
+            <h3>🎨 Visual Zettelkasten 実践</h3>
+            <div class="technique-list">
+                <strong>手順:</strong>
+                <ol>
+                    <li><strong>図解ファイル作成</strong>
+                        <ul>
+                            <li>ファイル名: <code>永久メモ名.excalidraw.md</code></li>
+                            <li>永久メモと同じフォルダに配置</li>
+                        </ul>
+                    </li>
+                    <li><strong>リンクで紐付け</strong>
+                        <ul>
+                            <li>永久メモ内: <code>![[永久メモ名.excalidraw.md]]</code></li>
+                            <li>図解内: <span class="shortcut">Cmd+K</span> で永久メモへリンク</li>
+                        </ul>
+                    </li>
+                    <li><strong>図解パターン</strong>
+                        <ul>
+                            <li>フローチャート: プロセスを図示</li>
+                            <li>概念マップ: 関係性を図示</li>
+                            <li>タイムライン: 時系列を図示</li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <h3>🗺️ Graph View 活用法</h3>
+            <div class="technique-list">
+                <strong>フィルタ設定:</strong>
+                <div class="code-snippet">
+# 永久メモだけ表示
+tag:#permanent
+
+# 特定トピックのみ
+path:Projects/ OR tag:#project
+
+# 孤立ノードを除外
+-file:""
+                </div>
+                <strong>色分け:</strong>
+                <ul>
+                    <li>Settings → Graph View → Groups</li>
+                    <li><code>tag:#permanent</code> → 紫</li>
+                    <li><code>tag:#fleeting</code> → グレー</li>
+                    <li><code>tag:#literature</code> → 青</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <h3>📈 情報の構造化テクニック</h3>
+            <div class="technique-list">
+                <strong>MOC (Map of Content) 作成:</strong>
+                <ol>
+                    <li><code>MOC - トピック名.md</code> ファイル作成</li>
+                    <li>関連ノートをリスト化:
+                        <div class="code-snippet">
+# プログラミング MOC
+
+## 基礎
+- [[変数とデータ型]]
+- [[制御構造]]
+- [[関数]]
+
+## 設計
+- [[オブジェクト指向]]
+- [[デザインパターン]]
+
+## 実践
+- [[リファクタリング]]
+- [[テスト駆動開発]]
+                        </div>
+                    </li>
+                    <li>各ノートにMOCへの逆リンク追加</li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- Cursor統合 -->
+    <section id="cursor" class="section" style="background: white;">
+        <div class="category-header">
+            <h2>⚡ Cursor × Obsidian 統合</h2>
+        </div>
+
+        <div class="technique-card">
+            <h3>🎯 コンテキストエンジニアリング実装</h3>
+            <div class="technique-list">
+                <strong>ディレクトリ構成:</strong>
+                <div class="code-snippet">
+project/
+├── .cursor/
+│   └── context/
+│       ├── project-overview.md    # プロジェクト概要
+│       ├── architecture.md        # アーキテクチャ
+│       └── coding-standards.md   # コーディング規約
+├── obsidian-vault/
+│   ├── Permanent/
+│   ├── Literature/
+│   └── MOCs/
+                </div>
+
+                <strong>context ファイル例:</strong>
+                <div class="code-snippet">
+# project-overview.md
+
+## プロジェクト概要
+Next.js 14 + TypeScript + Supabase
+
+## 重要な設計判断
+- [[認証設計]] を参照
+- [[データベース設計]] を参照
+
+## よく使うパターン
+- [[API実装パターン]]
+- [[エラーハンドリング]]
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <h3>🤖 Cursor へのコンテキスト渡し方</h3>
+            <div class="technique-list">
+                <strong>方法1: ファイルパス指定</strong>
+                <div class="code-snippet">
+@obsidian-vault/Permanent/認証設計.md を参考に、
+JWT認証を実装してください
+                </div>
+
+                <strong>方法2: 内容をコピー</strong>
+                <ol>
+                    <li>Obsidianで永久メモを開く</li>
+                    <li>内容全体をコピー</li>
+                    <li>Cursorに「以下のコンテキストを元に...」と貼り付け</li>
+                </ol>
+
+                <strong>方法3: リンク活用</strong>
+                <div class="code-snippet">
+// Cursorのプロンプト
+以下の設計に従って実装してください:
+
+## 認証フロー
+[Obsidianからコピーした内容]
+
+## 参考
+- エラーハンドリング: [内容]
+- セキュリティ考慮事項: [内容]
+                </div>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <h3>📝 Cursor 出力 → Obsidian 保存フロー</h3>
+            <div class="technique-list">
+                <ol>
+                    <li><strong>Cursorで実装</strong>
+                        <ul>
+                            <li>Obsidianの設計メモを元にコード生成</li>
+                        </ul>
+                    </li>
+                    <li><strong>学びを抽出</strong>
+                        <ul>
+                            <li>実装中に気づいた点をメモ</li>
+                            <li>エラーと解決策を記録</li>
+                        </ul>
+                    </li>
+                    <li><strong>Obsidianに戻す</strong>
+                        <ul>
+                            <li>新規ノート: <code>実装 - [機能名].md</code></li>
+                            <li>テンプレート:
+                                <div class="code-snippet">
+## 実装内容
+[何を作ったか]
+
+## 学んだこと
+- [学び1]
+- [学び2]
+
+## 次に活かせること
+- [転用1]
+- [転用2]
+
+## リンク
+[[設計メモ]] [[関連実装]]
+                                </div>
+                            </li>
+                        </ul>
+                    </li>
+                </ol>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <h3>🔄 AIスタック思考法</h3>
+            <div class="technique-list">
+                <strong>ツール使い分け:</strong>
+                <ul>
+                    <li><strong>Obsidian</strong>: 知識の蓄積・構造化</li>
+                    <li><strong>Cursor</strong>: コード生成・実装</li>
+                    <li><strong>NotebookLM</strong>: 大量ドキュメントの要約</li>
+                    <li><strong>Claude Code</strong>: 複雑な推論・設計判断</li>
+                </ul>
+                <strong>フロー:</strong>
+                <ol>
+                    <li>情報収集 → <strong>Obsidian</strong></li>
+                    <li>要約・理解 → <strong>NotebookLM</strong></li>
+                    <li>設計判断 → <strong>Claude Code</strong></li>
+                    <li>実装 → <strong>Cursor</strong></li>
+                    <li>知識化 → <strong>Obsidian</strong></li>
+                </ol>
+            </div>
+        </div>
+    </section>
+
+    <!-- ショートカット -->
+    <section id="shortcuts" class="section">
+        <div class="category-header">
+            <h2>⌨️ 必須ショートカット</h2>
+        </div>
+
+        <div class="technique-card">
+            <h3>🚀 Obsidian 基本ショートカット</h3>
+            <div class="technique-list">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background: var(--bg);">
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><strong>操作</strong></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><strong>macOS</strong></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><strong>Windows</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">コマンドパレット</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Cmd+P</span></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Ctrl+P</span></td>
+                    </tr>
+                    <tr style="background: var(--bg);">
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">クイックスイッチ</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Cmd+O</span></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Ctrl+O</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">全文検索</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Cmd+Shift+F</span></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Ctrl+Shift+F</span></td>
+                    </tr>
+                    <tr style="background: var(--bg);">
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">リンク挿入</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Cmd+K</span></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Ctrl+K</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">Graph View</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Cmd+G</span></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Ctrl+G</span></td>
+                    </tr>
+                    <tr style="background: var(--bg);">
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">バックリンク</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Cmd+Alt+←</span></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Ctrl+Alt+←</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <div class="technique-card">
+            <h3>⚡ Cursor ショートカット</h3>
+            <div class="technique-list">
+                <table style="width: 100%; border-collapse: collapse;">
+                    <tr style="background: var(--bg);">
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><strong>操作</strong></td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><strong>ショートカット</strong></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">Cursor Chat</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Cmd+L</span></td>
+                    </tr>
+                    <tr style="background: var(--bg);">
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">インライン生成</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Cmd+K</span></td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">ファイル参照追加</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">@filename</span></td>
+                    </tr>
+                    <tr style="background: var(--bg);">
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);">ターミナル</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border);"><span class="shortcut">Ctrl+`</span></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p style="font-size: 1.2rem;">具体的なテクニックと手順のみに絞り込みました</p>
+        <div style="margin-top: 1rem;">
+            <a href="github-cursor-proposal.html" style="color: white; text-decoration: underline;">GitHub実装提案 →</a>
+        </div>
+    </footer>
+</body>
+</html>

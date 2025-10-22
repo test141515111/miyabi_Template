@@ -1,0 +1,1276 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GitHub メモ管理 完全ガイド - Obsidian機能完全対応</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #8b5cf6;
+            --secondary: #ec4899;
+            --accent: #f59e0b;
+            --text: #1f2937;
+            --bg: #fafafa;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+            line-height: 1.8;
+            color: var(--text);
+            background: var(--bg);
+            padding-top: 70px;
+        }
+
+        /* Global Navigation */
+        .global-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .global-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .global-nav-logo {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .global-nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .global-nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .global-nav-link:hover {
+            background: #f7fafc;
+            color: #667eea;
+        }
+
+        .global-nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .hero {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav {
+            background: white;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            gap: 0.5rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 0.9rem;
+        }
+
+        .nav a {
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            transition: all 0.3s;
+        }
+
+        .nav a:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        .section {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 3rem 2rem;
+        }
+
+        .card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+            border-left: 4px solid var(--primary);
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .step-box {
+            background: var(--bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent);
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--accent);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 2rem;
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        .code-block {
+            background: #282c34;
+            color: #abb2bf;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, rgba(139, 92, 246, 0.1), rgba(236, 72, 153, 0.1));
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 3px solid var(--primary);
+            margin: 1rem 0;
+        }
+
+        .timeline-item {
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: "●";
+            position: absolute;
+            left: -2.4rem;
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.95rem;
+        }
+
+        table th,
+        table td {
+            padding: 0.8rem;
+            text-align: left;
+            border: 1px solid #e5e7eb;
+        }
+
+        table th {
+            background: var(--primary);
+            color: white;
+            font-weight: 600;
+        }
+
+        table tr:nth-child(even) {
+            background: #f9fafb;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: #d1fae5;
+            border-left: 4px solid #10b981;
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .footer {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .comparison-col {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .obsidian-col {
+            background: #e0e7ff;
+            border-left: 4px solid #6366f1;
+        }
+
+        .github-col {
+            background: #dbeafe;
+            border-left: 4px solid #3b82f6;
+        }
+
+        @media (max-width: 768px) {
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Global Navigation -->
+    <nav class="global-nav">
+        <div class="global-nav-container">
+            <a href="./" class="global-nav-logo">🌸 GitHub×Cursor</a>
+            <div class="global-nav-links">
+                <a href="github-cursor-future-vision.html" class="global-nav-link">知的未来</a>
+                <a href="github-cursor-proposal.html" class="global-nav-link active">完全ガイド</a>
+                <a href="28-articles-summary.html" class="global-nav-link">28記事まとめ</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero">
+        <h1>📝 GitHub メモ管理 完全ガイド</h1>
+        <p>Obsidian全機能をGitHubで完全再現</p>
+    </section>
+
+    <nav class="nav">
+        <div class="nav-container">
+            <a href="#mapping">機能対応表</a>
+            <a href="#roadmap">3ヶ月ロードマップ</a>
+            <a href="#visualization">可視化</a>
+            <a href="#daily">1日の流れ</a>
+            <a href="#weekly">1週間の流れ</a>
+            <a href="#usecase">ユースケース</a>
+            <a href="#setup">初期設定</a>
+        </div>
+    </nav>
+
+    <!-- Obsidian機能完全対応表 -->
+    <section id="mapping" class="section">
+        <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 2rem;">🔄 Obsidian機能 完全対応表</h2>
+
+        <div class="card">
+            <h3>📊 全機能マッピング</h3>
+            <table>
+                <tr>
+                    <th>Obsidian機能</th>
+                    <th>GitHub対応</th>
+                    <th>実装方法</th>
+                </tr>
+                <tr>
+                    <td><strong>Daily Note</strong></td>
+                    <td>GitHub Discussions (Daily)</td>
+                    <td>毎日新規Discussion作成</td>
+                </tr>
+                <tr>
+                    <td><strong>Fleeting Notes</strong></td>
+                    <td>Daily Discussionのコメント</td>
+                    <td>思いついたらすぐコメント追加</td>
+                </tr>
+                <tr>
+                    <td><strong>Literature Notes</strong></td>
+                    <td>Issue with #literature label</td>
+                    <td>本・記事の引用を記録</td>
+                </tr>
+                <tr>
+                    <td><strong>Permanent Notes</strong></td>
+                    <td>Issue with #permanent label</td>
+                    <td>抽象化された永久保存版</td>
+                </tr>
+                <tr>
+                    <td><strong>[[リンク]]</strong></td>
+                    <td>#123 Issue参照</td>
+                    <td>Issue番号でリンク</td>
+                </tr>
+                <tr>
+                    <td><strong>Graph View</strong></td>
+                    <td>Issue Network（Mermaid図）</td>
+                    <td>README.mdに自動生成</td>
+                </tr>
+                <tr>
+                    <td><strong>Excalidraw</strong></td>
+                    <td>Mermaid図 + 画像添付</td>
+                    <td>IssueにMermaid記法で図解</td>
+                </tr>
+                <tr>
+                    <td><strong>ExcaliBrain</strong></td>
+                    <td>Mermaid Mindmap</td>
+                    <td>自動マインドマップ生成</td>
+                </tr>
+                <tr>
+                    <td><strong>Dataview</strong></td>
+                    <td>GitHub Advanced Search</td>
+                    <td>検索クエリで動的一覧</td>
+                </tr>
+                <tr>
+                    <td><strong>Templater</strong></td>
+                    <td>Issue Template</td>
+                    <td>.github/ISSUE_TEMPLATE/</td>
+                </tr>
+                <tr>
+                    <td><strong>Calendar</strong></td>
+                    <td>Discussions Timeline</td>
+                    <td>日付でフィルタ表示</td>
+                </tr>
+                <tr>
+                    <td><strong>Tag Wrangler</strong></td>
+                    <td>Label管理</td>
+                    <td>Issuesページでラベル操作</td>
+                </tr>
+                <tr>
+                    <td><strong>フォルダ構成</strong></td>
+                    <td>Labelによる分類</td>
+                    <td>topic:xxx ラベルで整理</td>
+                </tr>
+                <tr>
+                    <td><strong>MOC</strong></td>
+                    <td>README.md 目次</td>
+                    <td>トピック別にIssue一覧</td>
+                </tr>
+            </table>
+        </div>
+    </section>
+
+    <!-- 3ヶ月ロードマップ -->
+    <section id="roadmap" class="section" style="background: white;">
+        <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 2rem;">⏱️ GitHub版 3ヶ月習得ロードマップ</h2>
+
+        <div class="card">
+            <h3>1ヶ月目：基礎習得</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Week 1: リポジトリ作成と基本操作</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>プライベートリポジトリ作成</li>
+                        <li>毎日Daily Discussion作成（10分）</li>
+                        <li>Issue参照 #123 を5回以上使う</li>
+                        <li>GitHub Mobile導入</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 2: ラベル体系の確立</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>#fleeting, #literature, #permanent ラベル作成</li>
+                        <li>Daily Noteから最初のIssue作成</li>
+                        <li>Issue Templateを1つ作成</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 3-4: リンク習慣の定着</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>新規Issueに必ず関連Issue参照を追加</li>
+                        <li>週末に孤立Issueチェック（リンクなしIssue）</li>
+                        <li>README.mdに最初の目次作成</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ 1ヶ月目の目標</strong>
+                <ul style="margin-left: 2rem;">
+                    <li>Daily Discussionを20回作成</li>
+                    <li>Issue を10個作成</li>
+                    <li>Issue参照を30回以上使用</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>2ヶ月目：構造化</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Week 5-6: トピック別分類</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>topic:プログラミング、topic:読書 などラベル追加</li>
+                        <li>既存Issueにトピックラベル付与</li>
+                        <li>README.mdをトピック別に整理</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 7-8: 永久メモ化の習慣</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>週1回、#fleetingを見返して#permanentに昇格</li>
+                        <li>事実→抽象化→転用フレームワークを適用</li>
+                        <li>最初のMermaid図を作成</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ 2ヶ月目の目標</strong>
+                <ul style="margin-left: 2rem;">
+                    <li>#permanent Issueを5個作成</li>
+                    <li>トピック別ラベルを3-5個確立</li>
+                    <li>Mermaid図を3つ作成</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>3ヶ月目：自動化と最適化</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Week 9-10: Issue Template拡充</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>永久メモ用Template作成</li>
+                        <li>読書メモ用Template作成</li>
+                        <li>プロジェクト用Template作成</li>
+                    </ul>
+                </div>
+
+                <div class="timeline-item">
+                    <h4>Week 11-12: 検索クエリ習得</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>GitHub Advanced Searchマスター</li>
+                        <li>Saved Searches作成</li>
+                        <li>自分専用ワークフロー確立</li>
+                        <li>Cursorとの連携開始</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="success-box">
+                <strong>✅ 3ヶ月目の目標</strong>
+                <ul style="margin-left: 2rem;">
+                    <li>Issue Template 3種類作成</li>
+                    <li>検索クエリを5つ習得</li>
+                    <li>Cursorで記事執筆を1回実施</li>
+                    <li>自分専用ワークフロー完成</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 可視化・図解 -->
+    <section id="visualization" class="section">
+        <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 2rem;">📊 可視化・図解テクニック</h2>
+
+        <div class="card">
+            <h3>🗺️ Graph View相当：Issue Network</h3>
+            <div class="step-box">
+                <p><span class="step-number">1</span> README.mdにMermaid図を追加</p>
+                <div class="code-block">
+```mermaid
+graph LR
+    A[#102 抽象化思考] --> B[#78 具体例1]
+    A --> C[#91 具体例2]
+    B --> D[#45 依存性注入]
+    C --> D
+    D --> E[#67 テスト駆動開発]
+
+    style A fill:#8b5cf6
+    style B fill:#ec4899
+    style C fill:#ec4899
+```
+                </div>
+            </div>
+
+            <div class="step-box">
+                <p><span class="step-number">2</span> GitHub Actionsで自動更新（オプション）</p>
+                <div class="code-block">
+# .github/workflows/update-network.yml
+name: Update Issue Network
+
+on:
+  issues:
+    types: [opened, edited]
+
+jobs:
+  update-network:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Generate Mermaid
+        run: |
+          # Issue参照を解析
+          # Mermaid図を自動生成
+          # README.mdを更新
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🎨 Excalidraw相当：Mermaid図解</h3>
+
+            <div class="comparison-grid">
+                <div class="comparison-col obsidian-col">
+                    <h4>Obsidian: Excalidraw</h4>
+                    <ul>
+                        <li>手書き風の図</li>
+                        <li>自由な配置</li>
+                        <li>ノートへリンク</li>
+                    </ul>
+                </div>
+                <div class="comparison-col github-col">
+                    <h4>GitHub: Mermaid</h4>
+                    <ul>
+                        <li>コードベースの図</li>
+                        <li>構造化された配置</li>
+                        <li>Issue参照リンク</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step-box">
+                <strong>よく使うMermaidパターン</strong>
+
+                <div class="example-box">
+                    <strong>1. フローチャート</strong>
+                    <div class="code-block">
+```mermaid
+flowchart TD
+    A[事実を記録] --> B{重要？}
+    B -->|はい| C[Issue化]
+    B -->|いいえ| D[Daily Noteに残す]
+    C --> E[抽象化]
+    E --> F[#permanent に昇格]
+```
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <strong>2. マインドマップ</strong>
+                    <div class="code-block">
+```mermaid
+mindmap
+  root((知的生産))
+    読書
+      Literature Notes
+      抽象化
+      転用
+    実装
+      Daily Note
+      Issue化
+      Permanent化
+    執筆
+      記事構成
+      Issue参照
+      公開
+```
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <strong>3. タイムライン</strong>
+                    <div class="code-block">
+```mermaid
+timeline
+    title 知識の成長プロセス
+    2025-01-20 : Daily Note : 一時メモ
+    2025-01-23 : Issue #102 : Literature Note
+    2025-01-27 : Issue #102 更新 : 抽象化追加
+    2025-02-03 : Issue #150 : Permanent Note
+```
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🧠 ExcaliBrain相当：自動マインドマップ</h3>
+            <div class="step-box">
+                <p>Issueの参照関係から自動生成されるマインドマップ</p>
+                <div class="code-block">
+```mermaid
+mindmap
+  root((#102 抽象化思考))
+    具体例
+      #78 デザインパターン
+      #91 リファクタリング
+    関連原理
+      #45 依存性注入
+      #67 TDD
+    転用先
+      #110 記事執筆
+      #115 実装ガイド
+```
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>📅 Calendar相当：Discussions Timeline</h3>
+            <div class="step-box">
+                <p>日付でDiscussionsをフィルタ</p>
+                <div class="code-block">
+# 今週のDaily Notes
+https://github.com/user/my-notes/discussions?discussions_q=category:Daily+created:>2025-01-20
+
+# 先月のDaily Notes
+https://github.com/user/my-notes/discussions?discussions_q=category:Daily+created:2025-01-01..2025-01-31
+
+# 特定日のDaily Note
+https://github.com/user/my-notes/discussions?discussions_q=category:Daily+"2025-01-23"
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Mermaidでカレンダー表示</strong>
+                <div class="code-block">
+```mermaid
+gantt
+    title 2025年1月 Daily Notes
+    dateFormat YYYY-MM-DD
+    section Week 1
+    Daily Note :done, 2025-01-20, 1d
+    Daily Note :done, 2025-01-21, 1d
+    Daily Note :done, 2025-01-22, 1d
+    section Week 2
+    Daily Note :done, 2025-01-27, 1d
+    Daily Note :active, 2025-01-28, 1d
+```
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🔍 Dataview相当：GitHub Advanced Search</h3>
+            <div class="step-box">
+                <strong>よく使う検索クエリ</strong>
+
+                <table>
+                    <tr>
+                        <th>目的</th>
+                        <th>クエリ</th>
+                    </tr>
+                    <tr>
+                        <td>永久メモ一覧</td>
+                        <td><code>is:issue label:permanent</code></td>
+                    </tr>
+                    <tr>
+                        <td>今週作成したIssue</td>
+                        <td><code>is:issue created:>2025-01-20</code></td>
+                    </tr>
+                    <tr>
+                        <td>特定トピック</td>
+                        <td><code>is:issue label:topic:プログラミング</code></td>
+                    </tr>
+                    <tr>
+                        <td>リンクのないIssue</td>
+                        <td><code>is:issue -linked:issue</code></td>
+                    </tr>
+                    <tr>
+                        <td>コメントの多いIssue</td>
+                        <td><code>is:issue comments:>5</code></td>
+                    </tr>
+                    <tr>
+                        <td>自分が作成</td>
+                        <td><code>is:issue author:@me</code></td>
+                    </tr>
+                    <tr>
+                        <td>複数ラベル</td>
+                        <td><code>is:issue label:permanent label:topic:プログラミング</code></td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="step-box">
+                <p><span class="step-number">1</span> Saved Searches作成</p>
+                <ul style="margin-left: 2rem;">
+                    <li>Issuesページで検索実行</li>
+                    <li>URLをブックマーク</li>
+                    <li>README.mdにリンクを追加</li>
+                </ul>
+
+                <div class="code-block">
+# README.md
+
+## 🔍 クイックリンク
+- [永久メモ](https://github.com/user/my-notes/issues?q=label:permanent)
+- [今週の活動](https://github.com/user/my-notes/issues?q=created:>2025-01-20)
+- [プログラミング](https://github.com/user/my-notes/issues?q=label:topic:プログラミング)
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>🏷️ Tag Wrangler相当：Label管理</h3>
+            <div class="step-box">
+                <p><span class="step-number">1</span> ラベル一括変更</p>
+                <div class="code-block">
+# Issuesページで
+1. 検索: label:old-label
+2. 全選択（ページ上部のチェックボックス）
+3. Label → Remove: old-label
+4. Label → Add: new-label
+                </div>
+            </div>
+
+            <div class="step-box">
+                <p><span class="step-number">2</span> ラベル統計確認</p>
+                <div class="code-block">
+# 各ラベルのIssue数を確認
+Issues → Labels → 各ラベルの右側に数字表示
+                </div>
+            </div>
+
+            <div class="step-box">
+                <p><span class="step-number">3</span> 未使用ラベル削除</p>
+                <ul style="margin-left: 2rem;">
+                    <li>Labelsページで「0 open」「0 closed」を確認</li>
+                    <li>使われていないラベルを削除</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1日の流れ -->
+    <section id="daily" class="section" style="background: white;">
+        <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 2rem;">📅 1日のメモ管理フロー</h2>
+
+        <div class="card">
+            <h3>朝（8:00）：今日のタスク確認</h3>
+            <div class="step-box">
+                <p><span class="step-number">1</span> GitHub Discussionsの「Daily」カテゴリを開く</p>
+                <div class="code-block">
+https://github.com/yourusername/my-notes/discussions?discussions_q=category:Daily
+                </div>
+                <p><span class="step-number">2</span> 新規ディスカッション作成</p>
+                <div class="code-block">
+タイトル: 2025-01-23 Daily Note
+カテゴリ: Daily
+
+## 今日のタスク
+- [ ] 読書：『デザインパターン』第3章
+- [ ] 記事執筆：抽象化思考について
+- [ ] 買い物：牛乳、卵
+
+## メモ
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>日中（随時）：一時メモを記録</h3>
+            <div class="step-box">
+                <p><span class="step-number">1</span> 気づいたことをすぐコメント</p>
+                <div class="example-box">
+                    <strong>例：読書中の気づき</strong>
+                    <div class="code-block">
+デザインパターンのSingletonは、グローバル変数の問題を解決するが、
+テストしにくいという新たな問題を生む。
+
+参考: #45（依存性注入の記事）
+                    </div>
+                </div>
+
+                <p><span class="step-number">2</span> スマホからも追記可能</p>
+                <ul style="margin-left: 2rem;">
+                    <li>GitHub Mobileアプリで開く</li>
+                    <li>コメント追加で一時メモ</li>
+                    <li>写真も添付可能</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>夜（21:00）：一時メモを整理</h3>
+            <div class="step-box">
+                <p><span class="step-number">1</span> Daily Noteを見返す</p>
+                <p><span class="step-number">2</span> 重要なメモを Issue化</p>
+                <div class="example-box">
+                    <strong>Issue作成例</strong>
+                    <div class="code-block">
+タイトル: デザインパターン - Singleton vs DI
+Labels: #permanent, #programming
+
+## 核心
+Singletonはグローバル状態を作るため、テストが困難。
+依存性注入（DI）を使えば、テスト可能で柔軟な設計が可能。
+
+## 詳細
+- Singleton: インスタンスが1つ保証されるが、暗黙的な依存が発生
+- DI: 依存関係を明示的にし、テスト時にモックに差し替え可能
+
+## 転用可能性
+- Webアプリのサービス層設計
+- モバイルアプリのデータ層設計
+
+## 図解
+```mermaid
+graph LR
+    A[Singleton] -->|問題| B[グローバル状態]
+    B --> C[テスト困難]
+    D[DI] -->|解決| E[明示的な依存]
+    E --> F[テスト容易]
+```
+
+## リンク
+- #45 依存性注入入門
+- #67 テスト駆動開発
+                    </div>
+                </div>
+
+                <p><span class="step-number">3</span> Daily Noteをクローズ</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- 1週間の流れ -->
+    <section id="weekly" class="section">
+        <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 2rem;">📆 1週間のメモ管理サイクル</h2>
+
+        <div class="timeline">
+            <div class="timeline-item">
+                <h3>月曜〜金曜：日次メモの蓄積</h3>
+                <p>Daily Noteで一時メモを記録 → 夜に整理してIssue化</p>
+            </div>
+
+            <div class="timeline-item">
+                <h3>土曜：週次レビュー（30分）</h3>
+                <div class="step-box">
+                    <p><span class="step-number">1</span> 今週作成したIssueを一覧</p>
+                    <div class="code-block">
+https://github.com/user/my-notes/issues?q=created:>2025-01-20
+                    </div>
+
+                    <p><span class="step-number">2</span> Issue Network図を更新</p>
+                    <ul style="margin-left: 2rem;">
+                        <li>README.mdのMermaid図に新しいIssueを追加</li>
+                        <li>関連するIssue同士をリンク</li>
+                    </ul>
+
+                    <p><span class="step-number">3</span> ラベルを整理</p>
+                    <ul style="margin-left: 2rem;">
+                        <li>一時メモ → <code>#fleeting</code></li>
+                        <li>永久保存版候補 → チェック</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="timeline-item">
+                <h3>日曜：知識の抽象化（1時間）</h3>
+                <div class="step-box">
+                    <p><span class="step-number">1</span> 今週の<code>#fleeting</code>を見返す</p>
+                    <div class="code-block">
+https://github.com/user/my-notes/issues?q=label:fleeting+created:>2025-01-20
+                    </div>
+
+                    <p><span class="step-number">2</span> 抽象化して<code>#permanent</code>に昇格</p>
+                    <div class="example-box">
+                        <strong>Before（#fleeting）</strong>
+                        <div class="code-block">
+Issue #95: Next.jsでSSRが遅い問題を解決
+- getServerSidePropsでデータ取得が遅かった
+- ISR（Incremental Static Regeneration）に変更したら速くなった
+                        </div>
+
+                        <strong>After（#permanent）</strong>
+                        <div class="code-block">
+Issue #100: パフォーマンス最適化の原則
+
+## 核心
+動的な必要がないデータは、静的生成すべき。
+リアルタイム性と速度のトレードオフを常に意識する。
+
+## 図解
+```mermaid
+graph TD
+    A[データの性質] --> B{リアルタイム性必要？}
+    B -->|はい| C[SSR: 遅いが最新]
+    B -->|いいえ| D[SSG: 速い]
+    C --> E[ISR: バランス]
+```
+
+## 原理
+- SSR: 毎回サーバーで生成（遅いが最新）
+- SSG: ビルド時に生成（速いが古い可能性）
+- ISR: 定期的に再生成（速度と鮮度のバランス）
+
+## 転用
+- Webアプリ全般のキャッシュ戦略
+- モバイルアプリのデータ同期
+
+## 元ネタ
+#95, #87, #72
+                        </div>
+                    </div>
+
+                    <p><span class="step-number">3</span> READMEに目次を更新</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ユースケース -->
+    <section id="usecase" class="section" style="background: white;">
+        <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 2rem;">💡 具体的なユースケース</h2>
+
+        <div class="card">
+            <h3>ケース1: 読書メモ → 記事執筆</h3>
+            <div class="example-box">
+                <strong>Step 1: 読書しながらメモ（Daily Discussion）</strong>
+                <div class="code-block">
+2025-01-23 Daily Note
+
+## 読書メモ『メモの魔力』
+- p.45: 抽象化は「具体→一般」への変換
+- p.67: 転用は「どこで使える？」を考えること
+- p.89: フレームワーク化で再現性を高める
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Step 2: 夜に整理（Issue作成）</strong>
+                <div class="code-block">
+Issue #102: 抽象化思考フレームワーク
+Labels: #permanent, #methodology
+
+## 核心
+具体的な経験から一般的な原理を抽出し、別の場面で再利用する。
+
+## 図解
+```mermaid
+flowchart LR
+    A[事実] --> B[抽象化]
+    B --> C[転用]
+    C --> D[新しい価値]
+```
+
+## フレームワーク
+1. 事実を記録
+2. 「ここから何が学べる？」
+3. 「他のどこで使える？」
+
+## 出典
+『メモの魔力』前田裕二
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Step 3: 週末に記事執筆（GitHub Discussions）</strong>
+                <div class="code-block">
+カテゴリ: Articles（記事執筆用）
+タイトル: 抽象化思考で知識を10倍活用する方法
+
+本文:
+[Issue #102の内容を元に執筆]
+[Issue #78（具体例1）を引用]
+[Issue #91（具体例2）を引用]
+
+## 参考Issue
+#102, #78, #91
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Step 4: Cursorで推敲</strong>
+                <div class="code-block">
+# Cursorで実行
+@discussion [記事のURL] を元に、
+- 冗長な表現を削減
+- 具体例を追加
+- 3000字に調整
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>ケース2: 仕事の学び → ナレッジベース</h3>
+            <div class="example-box">
+                <strong>問題発生（Daily Noteにメモ）</strong>
+                <div class="code-block">
+2025-01-23 Daily Note
+
+## 問題
+Excelマクロで大量データ処理時にメモリエラー。
+30万行のデータを処理しようとしたら落ちた。
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>解決策を実行 → Issue化（図解付き）</strong>
+                <div class="code-block">
+Issue #105: Excel大量データ処理の対処法
+Labels: #permanent, #work, #excel
+
+## 問題
+Excelは約100万行まで扱えるが、メモリ次第で落ちる。
+
+## 図解
+```mermaid
+flowchart TD
+    A[大量データ] --> B{行数は？}
+    B -->|10万以下| C[通常処理]
+    B -->|10万以上| D[分割処理]
+    D --> E[配列使用]
+    E --> F[数式削除]
+    F --> G[成功]
+```
+
+## 解決策
+1. データを分割（10万行ずつ処理）
+2. 配列でまとめて処理（セル1つずつ処理しない）
+3. 不要な数式・書式を削除
+
+## コード例
+[実際に使ったVBAコード]
+
+## 転用
+- PowerPointの大量スライド処理
+- Wordの大量データ差し込み印刷
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>ケース3: 趣味の記録 → 体系的な知識</h3>
+            <div class="example-box">
+                <strong>日々の料理メモ（Daily Discussion）</strong>
+                <div class="code-block">
+2025-01-23 Daily Note
+
+## 料理メモ
+カレーを作った。玉ねぎを飴色になるまで炒めたら美味しくなった。
+でも40分もかかって大変だった。
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>週末に抽象化（Issue作成 + 図解）</strong>
+                <div class="code-block">
+Issue #108: 料理の「旨味を引き出す」原理
+Labels: #permanent, #cooking
+
+## 核心
+素材を加熱することで、水分を飛ばし、糖分を凝縮・カラメル化させる。
+これが旨味・甘みの源泉。
+
+## 図解
+```mermaid
+graph TD
+    A[素材] --> B[加熱]
+    B --> C[水分蒸発]
+    C --> D[糖分凝縮]
+    D --> E[カラメル化]
+    E --> F[旨味増加]
+```
+
+## 具体例
+- 玉ねぎ: 飴色になるまで炒める（40分）
+- トマト: 水分を飛ばして煮詰める（20分）
+- 肉: 表面を焼いてメイラード反応
+
+## 転用
+- 野菜炒め全般
+- ソース作り
+- スープの仕上げ
+
+## 時短テク
+- 電子レンジで事前加熱（10分短縮）
+- 冷凍玉ねぎを使う（繊維が壊れて早い）
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Mermaidでレシピネットワーク</strong>
+                <div class="code-block">
+```mermaid
+mindmap
+  root((料理の知識))
+    旨味を引き出す
+      #108 カラメル化
+      #112 メイラード反応
+    時短テクニック
+      #120 電子レンジ活用
+      #125 冷凍野菜
+    基本技術
+      #130 包丁の使い方
+      #135 火加減調整
+```
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 初期設定 -->
+    <section id="setup" class="section">
+        <h2 style="font-size: 2rem; color: var(--primary); margin-bottom: 2rem;">⚙️ 初期設定（10分で完了）</h2>
+
+        <div class="card">
+            <h3>Step 1: リポジトリ作成</h3>
+            <div class="code-block">
+1. https://github.com/new にアクセス
+2. Repository name: my-notes（好きな名前でOK）
+3. Description: 私の知識ベース
+4. ✅ Private（プライベートに設定）
+5. ✅ Add a README file
+6. Create repository
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Step 2: ラベル作成</h3>
+            <div class="code-block">
+Issues → Labels → New label
+
+必須ラベル:
+- fleeting（一時メモ）- グレー #d3d3d3
+- literature（文献メモ）- 青 #0075ca
+- permanent（永久保存版）- 紫 #8b5cf6
+- topic:プログラミング - 黄色 #fbca04
+- topic:読書 - 緑 #10b981
+- topic:料理 - オレンジ #f97316
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Step 3: Discussions 有効化</h3>
+            <div class="code-block">
+Settings → Features → ✅ Discussions
+            </div>
+            <p>カテゴリ作成：</p>
+            <ul style="margin-left: 2rem;">
+                <li><strong>Daily</strong> - 日次メモ</li>
+                <li><strong>Articles</strong> - 記事執筆</li>
+                <li><strong>Questions</strong> - 疑問・質問</li>
+            </ul>
+        </div>
+
+        <div class="card">
+            <h3>Step 4: Issue Template作成</h3>
+            <div class="code-block">
+.github/ISSUE_TEMPLATE/permanent-note.md
+
+---
+name: 永久保存版ノート
+about: 再利用可能な知識を記録
+labels: permanent
+---
+
+## 核心
+[この知識の本質を1-2行で]
+
+## 図解（オプション）
+```mermaid
+graph TD
+    A[要素1] --> B[要素2]
+```
+
+## 詳細
+[詳しい説明]
+
+## 転用可能性
+- [使える場面1]
+- [使える場面2]
+
+## 元ネタ
+#xxx, #yyy
+            </div>
+        </div>
+
+        <div class="card">
+            <h3>Step 5: README.md 更新</h3>
+            <div class="code-block">
+# 私の知識ベース
+
+## 🗺️ Issue Network
+```mermaid
+graph LR
+    A[知識ベース] --> B[プログラミング]
+    A --> C[読書]
+    A --> D[料理]
+    B --> E[永久メモ群]
+    C --> E
+    D --> E
+```
+
+## 📚 カテゴリ
+- [プログラミング](issues?q=label:topic:プログラミング)
+- [読書メモ](issues?q=label:literature)
+- [料理](issues?q=label:topic:料理)
+
+## 🌟 永久保存版
+[永久保存版のIssue一覧](issues?q=label:permanent)
+
+## 📅 デイリーノート
+[Daily Discussions](discussions?discussions_q=category:Daily)
+
+## 🔍 クイックリンク
+- [今週の活動](issues?q=created:>2025-01-20)
+- [リンクのないIssue](issues?q=-linked:issue)
+- [コメントの多いIssue](issues?q=comments:>5)
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p style="font-size: 1.3rem; font-weight: 600;">🎉 Obsidian全機能をGitHubで完全再現！</p>
+        <p style="margin-top: 1rem;">Graph View、Excalidraw、Dataview、Calendar、すべて対応</p>
+        <div style="margin-top: 1.5rem;">
+            <a href="28-articles-summary.html" style="color: white; text-decoration: underline; margin: 0 1rem;">← 28記事テクニック集</a>
+            <a href="documentation.html" style="color: white; text-decoration: underline; margin: 0 1rem;">システムドキュメント</a>
+        </div>
+    </footer>
+</body>
+</html>

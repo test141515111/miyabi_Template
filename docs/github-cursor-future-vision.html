@@ -384,6 +384,64 @@
             font-weight: bold;
         }
 
+        /* Global Navigation */
+        .global-nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            padding: 15px 0;
+        }
+
+        .global-nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 40px;
+        }
+
+        .global-nav-logo {
+            font-size: 1.3em;
+            font-weight: bold;
+            color: #667eea;
+            text-decoration: none;
+        }
+
+        .global-nav-links {
+            display: flex;
+            gap: 30px;
+            align-items: center;
+        }
+
+        .global-nav-link {
+            color: #4a5568;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 8px 16px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .global-nav-link:hover {
+            background: #f7fafc;
+            color: #667eea;
+        }
+
+        .global-nav-link.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        body {
+            padding-top: 80px;
+        }
+
         @media (max-width: 768px) {
             .timeline {
                 padding: 40px 0 40px 40px;
@@ -410,6 +468,18 @@
     </style>
 </head>
 <body>
+    <!-- Global Navigation -->
+    <nav class="global-nav">
+        <div class="global-nav-container">
+            <a href="./" class="global-nav-logo">🌸 GitHub×Cursor</a>
+            <div class="global-nav-links">
+                <a href="github-cursor-future-vision.html" class="global-nav-link active">知的未来</a>
+                <a href="github-cursor-proposal.html" class="global-nav-link">完全ガイド</a>
+                <a href="28-articles-summary.html" class="global-nav-link">28記事まとめ</a>
+            </div>
+        </div>
+    </nav>
+
     <div class="container">
         <header>
             <h1>🌸 GitHub×Cursor 知的未来へのロードマップ</h1>
